@@ -5,7 +5,7 @@ export default function ArtistDetail() {
     console.log({ id })
     return (
         <div>
-            <div className='w-full h-10 bg-white'></div>
+            <div className='w-full h-10 bg-white'>{id}</div>
         </div>
     );
 }

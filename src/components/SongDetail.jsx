@@ -5,7 +5,7 @@ export default function SongDetail() {
     console.log({ songid })
     return (
         <div>
-            <div className='w-full h-10 bg-white'></div>
+            <div className='w-full h-10 bg-black'>{songid}</div>
         </div>
     );
 }
