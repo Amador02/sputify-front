@@ -28,14 +28,14 @@ const Search = ({ onSearch }) => {
                     <path
                         d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
                         stroke="currentColor"
-                        stroke-width="1.333"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.333"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                     ></path>
                 </svg>
             </button>
             <input type="text"
-                class="bg-white outline-none border border-transparent text-neutral-900 placeholder-neutral-400 text-sm rounded-lg focus:ring-white  focus:border-transparent block w-64 p-2.5 checked:bg-emerald-500"
+                className="bg-white outline-none border border-transparent text-neutral-900 placeholder-neutral-400 text-sm rounded-lg focus:ring-white  focus:border-transparent block w-64 p-2.5 checked:bg-emerald-500"
                 placeholder="Buscar..." />
             <button className="relative mr-2">
                 <svg
@@ -45,8 +45,8 @@ const Search = ({ onSearch }) => {
                     stroke="currentColor"
                 >
                     <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M6 18L18 6M6 6l12 12"
                     ></path>
                 </svg>

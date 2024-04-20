@@ -2,8 +2,10 @@ import ArtistDetail from './ArtistDetail';
 import Home from './Home';
 import SongDetail from './SongDetail';
 import MusicBar from './MusicBar';
+import LeftBar from './LeftBar';
+import { LogoFull } from './LogoSputify';
 
 
 export {
-    ArtistDetail, Home, SongDetail, MusicBar
+    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, LeftBar
 }
