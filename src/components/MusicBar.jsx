@@ -5,8 +5,8 @@ export default function () {
             <div className="flex flex-row w-fit h-max ml-5 text-center gap-5">
                 <img src={"none"} />
                 <div className="items-start text-left">
-                    <h1 className="text-xl text-white font-semibold">Sputify</h1>
-                    <h1 className="text-xs text-neutral-300">Sputify</h1>
+                    <h1 className="text-xl text-white font-semibold">Storify</h1>
+                    <h1 className="text-xs text-neutral-300">Storify</h1>
                 </div>
             </div>
             <div className="flex flex-col gap-1 h-[100%] justify-center items-center">

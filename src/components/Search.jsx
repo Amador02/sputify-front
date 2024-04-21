@@ -1,5 +1,4 @@
-import Boton from './Boton';
-import './search.css';
+import '../assets/styles/search.css';
 import React, { useState } from 'react';
 
 const Search = ({ onSearch }) => {

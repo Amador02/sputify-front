@@ -1,21 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { Home, SongDetail, ArtistDetail, MusicBar, LogoFull, LeftBar } from './components'
+import { Home, SongDetail, ArtistDetail, MusicBar, LogoFull, LeftBar, Search } from './components'
 import { useState, useEffect } from 'react';
-import Search from './Search';
 import Results from './Results';
+import { Spotify } from './assets/svgs';
 
 
 function App() {
   return (
     <Router>
       <div className='w-[100%] h-10 flex items-center justify-center' >
-        <LogoFull />
+        <img  className='h-[100%]' src={Spotify} alt="spotify" />
       </div>
-      <div>
-        <LeftBar />
-      </div>
+      <LeftBar />
       <div className="flex flex-col justify-center items-center">
         {/* inicio ||  Explorar || Artistas 🔥 || Cuenta */}
         <div className="px-6 h-[calc(100vh-130px)] overflow-y-scroll w-[100%] hide-scrollbar flex xl:flex-row flex-col-reverse flex-grow">
