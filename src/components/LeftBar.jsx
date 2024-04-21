@@ -1,42 +1,43 @@
+import { NavLink } from 'react-router-dom';
 import '../assets/styles/leftnavbar.css'
 export default function () {
-    let color = "white"
     return (
-        <div className="text-center menu-bar h-fit w-64 absolute top-[50%] -translate-y-[50%] bottom-0 flex flex-col items-center justify-center rounded-[35px] bg-black border-4 fill-white">
-            <ul className='w-[100%] inline-block m-0 p-0'>
-                <li><a href="/">
-                    <span className="nav-icon">
-                        Inicio</span>
-                    <svg  width="24px" height="10px" viewBox="0 0 28 28" fill={color}><path d="M12.5921,3.49787 C13.4147,2.83801 14.5853,2.83801 15.4079,3.49787 L23.1579,9.71462 C23.6902,10.1417 24,10.7872 24,11.4697 L24,22.75 C24,23.9926 22.9926,25 21.75,25 L19.25,25 C18.0074,25 17,23.9926 17,22.75 L17,16.25 C17,15.8358 16.6642,15.5 16.25,15.5 L11.75,15.5 C11.3358,15.5 11,15.8358 11,16.25 L11,22.75 C11,23.9926 9.99264,25 8.75,25 L6.25,25 C5.00736,25 4,23.9926 4,22.75 L4,11.4697 C4,10.7872 4.30976,10.1417 4.84212,9.71462 L12.5921,3.49787 Z" > </path></svg>
-
-                </a></li>
-                <li><a href="songs" className='w-[100%]'>
-                    <svg fill={color} width="16px" height="16px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,13a3,3,0,1,1,3-3A3,3,0,0,1,12,15Z"></path></svg>
-                    <span className="nav-text">Canciones</span>
-
-                </a></li>
-                <li className='align-middle'><a href="artists">
-                    <span className="nav-icon">
-                        <svg fill={color} width="32px" height="32px" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg" id="karaoke">
-                            <path d="M12.1,2.952A2.988,2.988,0,0,0,6.99,4.917l3.142,3.142A2.988,2.988,0,0,0,12.1,2.952Zm-7.428,5.3L2.55,10.377a1,1,0,0,0,0,1.414l.707.707a1,1,0,0,0,1.414,0l2.121-2.121L8.914,8.255,6.793,6.134Zm.741,2.087-.707-.707L6.793,7.548l.707.707Z" />
+        <div className="flex flex-col items-center justify-center rounded-tr-[1rem] bg-[#233345] text-white">
+            <ul className='h-full flex flex-col mt-8 mb-8 p-0 pl-4'>
+                <li>
+                    <NavLink className='nav' exact to="/">
+                        <svg viewBox="0 0 24 24"><path d="m9.59,0.49c0.82,-0.66 2,-0.66 2.82,0l7.75,6.21c0.53,0.43 0.84,1.08 0.84,1.76l0,11.28c0,1.24 -1.01,2.25 -2.25,2.25l-2.5,0c-1.24,0 -2.25,-1.01 -2.25,-2.25l0,-6.5c0,-0.41 -0.34,-0.75 -0.75,-0.75l-4.5,0c-0.41,0 -0.75,0.34 -0.75,0.75l0,6.5c0,1.24 -1.01,2.25 -2.25,2.25l-2.5,0c-1.24,0 -2.25,-1.01 -2.25,-2.25l0,-11.28c0,-0.68 0.31,-1.33 0.84,-1.76l7.75,-6.21z" /></svg>
+                        <span className="">Inicio</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className='nav' to="/songs">
+                        <svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m10,0a10,10 0 1 0 10,10a10,10 0 0 0 -10,-10zm0,13a3,3 0 1 1 3,-3a3,3 0 0 1 -3,3z" /></svg>
+                        <span className="nav-text">Canciones</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className='nav' to="/artists">
+                        <svg width="20px" height="20px" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg" id="karaoke">
+                            <path d="m13.75,1.25a4.18,4.18 0 0 0 -7.15,2.76l4.39,4.38a4.18,4.18 0 0 0 2.76,-7.14zm-10.38,7.4l-2.96,2.98a1.4,1.4 0 0 0 0,1.97l0.99,0.99a1.4,1.4 0 0 0 1.97,0l2.96,-2.97l2.96,-2.97l-2.96,-2.98l-2.96,2.97l0,0.01zm1.03,2.92l-0.98,-0.99l2.91,-2.91l0.99,0.99l-2.92,2.91z" />
                         </svg>
-                    </span>
-                    <span className="nav-text">Artistas</span>
-                </a></li>
-                <li><a href="feed">
-                    <span className="nav-icon">
-                        <svg width="32px" height="32px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill={color}><path d="M28.76,3.24C28.25,1.91,26.96,1,25.5,1C23.57,1,22,2.57,22,4.5c0,0.58,0.16,1.15,0.43,1.65l-2.86,2.86   C14.82,7.4,7.06,10.8,3.93,13.93c-3.9,3.9-3.9,10.24,0,14.14C5.88,30.02,8.44,31,11,31s5.12-0.98,7.07-2.92   c3.13-3.13,6.53-10.89,4.91-15.64l2.86-2.86C26.35,9.84,26.92,10,27.5,10c1.93,0,3.5-1.57,3.5-3.5C31,5.04,30.09,3.75,28.76,3.24z" > </path></svg>
-                    </span>
-                    <span className="nav-text">Alimentar</span>
-                </a></li>
-                <li><a href="search">
-                    <span>
-                        <svg fill={color} width="32px" height="32px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <span className="nav-text">Artistas</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className='nav' to="/feed">
+                        <svg width="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M28.76,3.24C28.25,1.91,26.96,1,25.5,1C23.57,1,22,2.57,22,4.5c0,0.58,0.16,1.15,0.43,1.65l-2.86,2.86   C14.82,7.4,7.06,10.8,3.93,13.93c-3.9,3.9-3.9,10.24,0,14.14C5.88,30.02,8.44,31,11,31s5.12-0.98,7.07-2.92   c3.13-3.13,6.53-10.89,4.91-15.64l2.86-2.86C26.35,9.84,26.92,10,27.5,10c1.93,0,3.5-1.57,3.5-3.5C31,5.04,30.09,3.75,28.76,3.24z" > </path></svg>
+                        <span>Alimentar</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink className='nav' to="/search">
+                        <svg width="20px" height="20px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.027 9.92L16 13.95 14 16l-4.075-3.976A6.465 6.465 0 0 1 6.5 13C2.91 13 0 10.083 0 6.5 0 2.91 2.917 0 6.5 0 10.09 0 13 2.917 13 6.5a6.463 6.463 0 0 1-.973 3.42zM1.997 6.452c0 2.48 2.014 4.5 4.5 4.5 2.48 0 4.5-2.015 4.5-4.5 0-2.48-2.015-4.5-4.5-4.5-2.48 0-4.5 2.014-4.5 4.5z" fillRule="evenodd" />
                         </svg>
-                    </span>
-                    <span className="nav-text">Buscar</span>
-                </a></li>
+                        <span>Buscar</span>
+                    </NavLink>
+                </li>
             </ul>
         </div>
     );

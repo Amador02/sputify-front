@@ -14,7 +14,7 @@ const Search = ({ onSearch }) => {
     };
 
     return (
-        <div className="flex flex-row relative justify-center items-center w-fit bg-white rounded-lg">
+        <div className="flex flex-row relative justify-center items-center w-fit h-fit bg-white rounded-lg">
             <button className="relative left-2 p-1">
                 <svg
                     width="17"
