@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
+import transicion from './transicion';
 
-export default function SongDetail() {
+function SongDetailComp() {
     const { songid } = useParams();
     console.log({ songid })
     return (
@@ -9,3 +10,11 @@ export default function SongDetail() {
         </div>
     );
 }
+
+const SongDetail = () => {
+    return transicion(SongDetailComp);
+}
+
+
+
+export default SongDetail;

@@ -251,6 +251,28 @@
   transform: scale(1.1);
 }
 
-.heart-container input:checked ~ svg {
+.heart-container input:checked~svg {
   fill: #E3474F;
+}
+
+
+.slide-in {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #080e16;
+  z-index: 1;
+  transform-origin: bottom;
+}
+.slide-out {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #080e16;
+  z-index: 1;
+  transform-origin: top;
 }

@@ -1,8 +1,11 @@
+import transicion from "./transicion";
 
 
-const Home = () => {
+const HomeAlone = () => {
     return (
-        <div>Hola</div>
-    );
+        <div>Hola</div>)
+}
+const Home = () => {
+    return transicion(HomeAlone);
 }
 export default Home;

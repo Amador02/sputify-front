@@ -1,9 +1,10 @@
 import { Spotify, Person } from '../assets/svgs';
 import { NavLink } from 'react-router-dom';
+import transicion from './transicion';
 
-export default function () {
+function header () {
     return (
-        <div className='bg-[#080e16] p-1 flex flex-row items-center justify-center'>
+        <div className='z-10 bg-[#080e16] p-1 flex flex-row items-center justify-center'>
             <div className='h-10 w-fit flex flex-row items-end grow'>
                 <NavLink to="/" className='p-0 h-10 '>
                     <img className='pl-5 w-full h-full pr-5 ' src={Spotify} alt="spotify" />
@@ -15,3 +16,4 @@ export default function () {
         </div>
     );
 }
+export default header;

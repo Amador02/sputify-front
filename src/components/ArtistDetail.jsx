@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
+import transicion from './transicion';
 
-export default function ArtistDetail() {
+function ArtistDetailComp() {
     const { id } = useParams();
     console.log({ id })
     return (
@@ -9,3 +10,8 @@ export default function ArtistDetail() {
         </div>
     );
 }
+const ArtistDetail = () => {
+    return transicion(ArtistDetailComp);
+}
+
+export default ArtistDetail;

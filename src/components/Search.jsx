@@ -1,7 +1,8 @@
 import '../assets/styles/search.css';
 import React, { useState } from 'react';
+import transicion from './transicion';
 
-const Search = ({ onSearch }) => {
+const SearchComp = ({ onSearch }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleInputChange = (event) => {
@@ -54,5 +55,8 @@ const Search = ({ onSearch }) => {
 
     );
 };
+const Search = () => {
+    return transicion(SearchComp);
+}
 
 export default Search;

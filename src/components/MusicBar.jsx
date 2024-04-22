@@ -1,7 +1,7 @@
 
 export default function () {
     return (
-        <div className="grid grid-cols-3 justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
+        <div className="z-10 grid grid-cols-3 justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
             <div className="flex flex-row w-fit h-max ml-5 text-center gap-5">
                 <img src={"none"} />
                 <div className="items-start text-left">
