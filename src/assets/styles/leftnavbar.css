@@ -9,8 +9,8 @@
         gap: 0.25rem;
         height: 3rem;
         vertical-align: middle;
-        background-color: #233345;
-        transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+        position: relative;
+        transition: background-color 0s ease-in-out; /* Add transition on NavLink */
     }
 
     li .nav span {
@@ -26,7 +26,7 @@
     }
 
     li .nav.active {
-        border-radius: 9999px 0 0 9999px;
+        border-radius: 100px 0 0 100px;
         background-color: #122133;
         position: relative;
     }

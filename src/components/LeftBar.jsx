@@ -1,15 +1,17 @@
 import { NavLink } from 'react-router-dom';
+import { animationControls, motion } from "framer-motion";
+
 import '../assets/styles/leftnavbar.css'
 export default function () {
     return (
-        <div className="flex flex-col items-center justify-center rounded-tr-[1rem] bg-[#233345] text-white">
+        <div className="flex flex-col items-center justify-center rounded-r-[1rem] bg-[#233345] text-white">
             <ul className='h-full flex flex-col mt-8 mb-8 p-0 pl-4'>
-                <li>
-                    <NavLink className='nav' exact to="/">
+                <motion.li animate={{}}>
+                    <NavLink className='nav' to="/home">
                         <svg viewBox="0 0 24 24"><path d="m9.59,0.49c0.82,-0.66 2,-0.66 2.82,0l7.75,6.21c0.53,0.43 0.84,1.08 0.84,1.76l0,11.28c0,1.24 -1.01,2.25 -2.25,2.25l-2.5,0c-1.24,0 -2.25,-1.01 -2.25,-2.25l0,-6.5c0,-0.41 -0.34,-0.75 -0.75,-0.75l-4.5,0c-0.41,0 -0.75,0.34 -0.75,0.75l0,6.5c0,1.24 -1.01,2.25 -2.25,2.25l-2.5,0c-1.24,0 -2.25,-1.01 -2.25,-2.25l0,-11.28c0,-0.68 0.31,-1.33 0.84,-1.76l7.75,-6.21z" /></svg>
                         <span className="">Inicio</span>
                     </NavLink>
-                </li>
+                </motion.li>
                 <li>
                     <NavLink className='nav' to="/songs">
                         <svg width="20px" height="20px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m10,0a10,10 0 1 0 10,10a10,10 0 0 0 -10,-10zm0,13a3,3 0 1 1 3,-3a3,3 0 0 1 -3,3z" /></svg>

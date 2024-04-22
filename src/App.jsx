@@ -6,7 +6,7 @@ import { MusicBar, LeftBar, Header, RouterComponent } from './components'
 function App() {
   return (
     <Router>
-      <div className='w-full h-full flex flex-col' >
+      <div className='w-svw h-svh flex flex-col' >
         <Header />
         <div className='flex flex-row grow'>
           <LeftBar />
