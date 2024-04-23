@@ -1,10 +1,8 @@
-import { Router, Routes, Route, Navigate } from "react-router-dom";
 
-export default function () {
+
+export default function ({ setLoggedIn }) {
+    const func =  e => setLoggedIn(logged => !logged);
     return (
-        <Routes>
-            <Route path="/login" element={<div> a</div>} />
-            <Route path="/*" element={<Navigate to="/login" />} />
-        </Routes>
+        <div onClick={func}>Hola</div>
     );
 }

@@ -17,6 +17,10 @@ export default function () {
                             path="/"
                             element={<Navigate to="/home" replace />}
                         />
+                        <Route
+                            path="/login"
+                            element={<Navigate to="/home" replace />}
+                        />
                         <Route path="/error" element={<button >Error</button>} />
                         <Route path="/home" element={<Home />} />
                         <Route path="/search" element={<Search />} />

@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import { MusicBar, Header, RouterComponent, LoginView } from './components'
+import { MusicBar, Header, RouterComponent, LoginViewRouting } from './components'
 
 function App() {
-  let loggedIn = false;
+  const [loggedIn, setLoggedIn] = useState(true);
   return (
     <Router>
       {
         loggedIn ?
           <div className='w-svw h-svh flex flex-col' >
-            <Header />
+            <Header setLoggedIn={setLoggedIn} />
             <div className='flex flex-row grow'>
               <RouterComponent />
             </div>
             <MusicBar />
           </div>
-          : <LoginView />
+          : <LoginViewRouting setLoggedIn={setLoggedIn} />
       }
     </Router>);
 
