@@ -1,0 +1,24 @@
+.nav {
+    position: relative;
+    display: flex;
+    border-radius: 100px;
+    fill: #fff;
+    color: #fff;
+    padding: 0.5rem;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+    font-weight: 600;
+    transition-duration: 0.2s;
+}
+
+.nav:hover {
+    color: #a5a9b1;
+}
+.nav.active:hover {
+    color: #fff;
+}
+
+.nav>* {
+    flex: 1;
+}

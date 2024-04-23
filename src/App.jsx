@@ -9,7 +9,6 @@ function App() {
       <div className='w-svw h-svh flex flex-col' >
         <Header />
         <div className='flex flex-row grow'>
-          <LeftBar />
           <RouterComponent />
         </div>
         <MusicBar />

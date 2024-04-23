@@ -5,9 +5,8 @@ import { AnimatePresence } from 'framer-motion';
 export default function () {
     return (
 
-        <div className="flex flex-grow flex-col h-[calc(100vh-120px)] justify-center items-center">
+        <div className="flex flex-grow flex-col h-full justify-center items-center">
             <div className="w-full h-full px-6 overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col">
-                
                     <Routes>
                         <Route path="/home" element={<Home />} />
                         <Route

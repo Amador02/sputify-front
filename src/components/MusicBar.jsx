@@ -1,15 +1,16 @@
+import album from '../assets/imgs/album.jpeg';
 
 export default function () {
     return (
-        <div className="z-10 grid grid-cols-3 justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
+        <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
             <div className="flex flex-row w-fit h-max ml-5 text-center gap-5">
-                <img src={"none"} />
+                <img className='mr-5 ml-5 h-16' src={album} alt="album" />
                 <div className="items-start text-left">
                     <h1 className="text-xl text-white font-semibold">Storify</h1>
                     <h1 className="text-xs text-neutral-300">Storify</h1>
                 </div>
             </div>
-            <div className="flex flex-col gap-1 h-[100%] justify-center items-center">
+            <div className="flex flex-col grow gap-1 h-full justify-center items-center">
                 <div className="flex flex-row gap-5">
                     <div className="container hoverable-icon">
                         <svg width="24px" height="24px" viewBox="0 0 24 24"> <path d="M2.75 20C2.75 20.5523 3.19772 21 3.75 21C4.30228 21 4.75 20.5523 4.75 20L4.75 4C4.75 3.44772 4.30229 3 3.75 3C3.19772 3 2.75 3.44772 2.75 4V20Z"></path> <path d="M20.75 19.0526C20.75 20.4774 19.1383 21.305 17.9803 20.4748L7.51062 12.9682C6.50574 12.2477 6.54467 10.7407 7.5854 10.073L18.0551 3.35665C19.2198 2.60946 20.75 3.44583 20.75 4.82961L20.75 19.0526Z"></path></svg>
@@ -25,18 +26,16 @@ export default function () {
                         <svg width="24px" height="24px" viewBox="0 0 24 24"><g id="SVGRepo_iconCarrier"> <path d="M21 4C21 3.44772 20.5523 3 20 3C19.4477 3 19 3.44772 19 4V20C19 20.5523 19.4477 21 20 21C20.5523 21 21 20.5523 21 20V4Z"></path> <path d="M3 4.94743C3 3.5226 4.61175 2.69498 5.7697 3.52521L16.2394 11.0318C17.2443 11.7523 17.2053 13.2593 16.1646 13.927L5.69492 20.6434C4.53019 21.3905 3 20.5542 3 19.1704V4.94743Z"></path> </g></svg>
                     </div>
                 </div>
-                <div>
-                    <div className="flex justify-self-end gap-1">
-                        <label className="font-semibold">0:00</label>
-                        <label className="slider w-[30vw]">
-                            <input className="level" type="range" min="1" max="100" />
-                        </label>
-                        <label className="font-semibold">6:28</label>
-                    </div>
+                <div className="flex w-full justify-self-end gap-1 pr-10 pl-10">
+                    <label className="font-semibold">0:00</label>
+                    <label className="grow slider">
+                        <input className="level" type="range" min="1" max="100" />
+                    </label>
+                    <label className="font-semibold">6:28</label>
                 </div>
             </div>
             <div className="flex justify-end pr-5 gap-10">
-                <svg className= "hoverable-icon-stroke" width="32px" height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4L21 7M21 7L18 10M21 7H17C16.0707 7 15.606 7 15.2196 7.07686C13.6329 7.39249 12.3925 8.63288 12.0769 10.2196C12 10.606 12 11.0707 12 12C12 12.9293 12 13.394 11.9231 13.7804C11.6075 15.3671 10.3671 16.6075 8.78036 16.9231C8.39397 17 7.92931 17 7 17H3M18 20L21 17M21 17L18 14M21 17H17C16.0707 17 15.606 17 15.2196 16.9231C15.1457 16.9084 15.0724 16.8917 15 16.873M3 7H7C7.92931 7 8.39397 7 8.78036 7.07686C8.85435 7.09158 8.92758 7.1083 9 7.12698" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                <svg className="hoverable-icon-stroke" width="32px" height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4L21 7M21 7L18 10M21 7H17C16.0707 7 15.606 7 15.2196 7.07686C13.6329 7.39249 12.3925 8.63288 12.0769 10.2196C12 10.606 12 11.0707 12 12C12 12.9293 12 13.394 11.9231 13.7804C11.6075 15.3671 10.3671 16.6075 8.78036 16.9231C8.39397 17 7.92931 17 7 17H3M18 20L21 17M21 17L18 14M21 17H17C16.0707 17 15.606 17 15.2196 16.9231C15.1457 16.9084 15.0724 16.8917 15 16.873M3 7H7C7.92931 7 8.39397 7 8.78036 7.07686C8.85435 7.09158 8.92758 7.1083 9 7.12698" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                 <div>
                     <label className="heart-container">
                         <input type="checkbox" />
