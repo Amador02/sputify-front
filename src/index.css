@@ -210,8 +210,8 @@
   -webkit-appearance: none;
   width: 0;
   height: 0;
-  -webkit-box-shadow: -200px 0 0 200px var(--level-color);
-  box-shadow: -200px 0 0 200px var(--level-color);
+  -webkit-box-shadow: -2000px 0 0 2000px var(--level-color);
+  box-shadow: -2000px 0 0 2000px var(--level-color);
 }
 
 .slider:hover .level {

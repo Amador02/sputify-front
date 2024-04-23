@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import { MusicBar, LeftBar, Header, RouterComponent } from './components'
+import { MusicBar, Header, RouterComponent } from './components'
 
 function App() {
   return (

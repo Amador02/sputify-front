@@ -1,14 +1,17 @@
+import { NavLink } from 'react-router-dom';
 import album from '../assets/imgs/album.jpeg';
 
 export default function () {
     return (
         <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
-            <div className="flex flex-row w-fit h-max ml-5 text-center gap-5">
-                <img className='mr-5 ml-5 h-16' src={album} alt="album" />
+            <div className='group ml-2'>
+            <NavLink className='flex pr-6 flex-row w-fit h-max text-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/happier'>
+                <img className='h-16 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={album} alt="album" />
                 <div className="items-start text-left">
                     <h1 className="text-xl text-white font-semibold">Storify</h1>
                     <h1 className="text-xs text-neutral-300">Storify</h1>
                 </div>
+            </NavLink>
             </div>
             <div className="flex flex-col grow gap-1 h-full justify-center items-center">
                 <div className="flex flex-row gap-5">
@@ -26,7 +29,7 @@ export default function () {
                         <svg width="24px" height="24px" viewBox="0 0 24 24"><g id="SVGRepo_iconCarrier"> <path d="M21 4C21 3.44772 20.5523 3 20 3C19.4477 3 19 3.44772 19 4V20C19 20.5523 19.4477 21 20 21C20.5523 21 21 20.5523 21 20V4Z"></path> <path d="M3 4.94743C3 3.5226 4.61175 2.69498 5.7697 3.52521L16.2394 11.0318C17.2443 11.7523 17.2053 13.2593 16.1646 13.927L5.69492 20.6434C4.53019 21.3905 3 20.5542 3 19.1704V4.94743Z"></path> </g></svg>
                     </div>
                 </div>
-                <div className="flex w-full justify-self-end gap-1 pr-10 pl-10">
+                <div className="flex w-full justify-self-end gap-1 pr-4 pl-4">
                     <label className="font-semibold">0:00</label>
                     <label className="grow slider">
                         <input className="level" type="range" min="1" max="100" />

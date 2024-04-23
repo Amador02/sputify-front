@@ -5,18 +5,22 @@ import '../assets/styles/header.css'
 
 const menus = [
     {
+        id: 'home',
         name: 'Inicio',
         path: '/home',
     },
     {
+        id: 'search',
         name: 'Buscar',
         path: '/search',
     },
     {
+        id: 'songs',
         name: 'Canciones',
         path: '/songs',
     },
     {
+        id: 'artists',
         name: 'Artistas',
         path: '/artists',
     }
@@ -34,9 +38,8 @@ function header() {
             <div className='h-full flex gap-1 mr-2'>
                 {
                     menus.map(e => (
-                        <NavLink to={e.path} className='nav'>
-
-                            {
+                        <NavLink to={e.path} className='nav' key={e.id}>
+                                {
                                 location.pathname.startsWith(e.path) && (
                                     <motion.span
                                         layoutId="bubble"
