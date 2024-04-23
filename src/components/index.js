@@ -6,8 +6,8 @@ import Search from './Search';
 import Header from './Header';
 import { LogoFull } from './LogoSputify';
 import RouterComponent from './RouterComponent';
-
+import LoginView from './LoginView';
 
 export {
-    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, Search, Header, RouterComponent
+    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, Search, Header, RouterComponent, LoginView
 }

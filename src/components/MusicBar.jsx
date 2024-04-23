@@ -8,8 +8,8 @@ export default function () {
             <NavLink className='flex pr-6 flex-row w-fit h-max text-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/happier'>
                 <img className='h-16 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={album} alt="album" />
                 <div className="items-start text-left">
-                    <h1 className="text-xl text-white font-semibold">Storify</h1>
-                    <h1 className="text-xs text-neutral-300">Storify</h1>
+                    <h1 className="text-xl text-white font-semibold">Happier</h1>
+                    <h1 className="text-xs text-neutral-300">Marshmello</h1>
                 </div>
             </NavLink>
             </div>
