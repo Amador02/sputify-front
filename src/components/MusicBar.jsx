@@ -1,12 +1,63 @@
 import { NavLink } from 'react-router-dom';
 import album from '../assets/imgs/album.jpeg';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 
 export default function () {
     const audioRef = useRef();
+    const playCheckRef = useRef();
     const [trackIndex, setTrackIndex] = useState(0);
     const [currentTrack, setCurrentTrack] = useState(canciones[0]);
+    const [durationProps, setDurationProps] = useState({
+        duration: '0:00',
+        noFormat: 0
+    });
+    const [timeProps, setTimeProps] = useState({
+        actual: '0:00',
+        noFormat: 0
+    });
+
+    useEffect(() => {
+        const audio = audioRef.current;
+
+        const loadedMetadataHandler = () => {
+            const minutes = Math.floor(audio.duration / 60);
+            const seconds = Math.floor(audio.duration % 60);
+            setDurationProps({
+                duration: `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
+                noFormat: audio.duration * 10
+            });
+            if (playCheckRef.current.checked) {
+                audioRef.current.play();
+            } else {
+                audioRef.current.pause();
+            }
+        };
+        const updateTime = () => {
+            const currentTime = Math.floor(audio.currentTime);
+            const minutes = Math.floor(currentTime / 60);
+            const seconds = currentTime % 60;
+            setTimeProps({
+                actual: `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
+                noFormat: audio.currentTime * 10
+            })
+        }
+
+        if (audio) {
+            audio.addEventListener('loadedmetadata', loadedMetadataHandler);
+            audio.addEventListener('timeupdate', updateTime);
+            audio.volume = 0.5;
+        }
+
+        return () => {
+            if (audio) {
+                audio.removeEventListener('loadedmetadata', loadedMetadataHandler);
+                audio.addEventListener('timeupdate', updateTime);
+                audio.volume = 0.5;
+            }
+        };
+    }, []);
+
     const handleNext = () => {
         if (trackIndex >= canciones.length - 1) {
             setTrackIndex(0);
@@ -28,7 +79,9 @@ export default function () {
     };
     return (
         <>
-            <audio src={currentTrack.src} ref={audioRef} />
+            <audio src={currentTrack.src} ref={audioRef} onEnded={e => {
+                handleNext();
+            }} />
             <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
                 <div className='group ml-2'>
                     <NavLink className='flex pr-6 flex-row w-72 h-max text-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/piel-canela'>
@@ -46,7 +99,7 @@ export default function () {
                         </div>
                         <div className="flex text-center items-center justify-center ">
                             <label className="container hoverable-icon w-[40px]">
-                                <input type="checkbox" onChange={e => {
+                                <input ref={playCheckRef} type="checkbox" onChange={e => {
                                     if (e.target.checked) {
                                         audioRef.current.play();
                                     } else {
@@ -62,24 +115,26 @@ export default function () {
                         </div>
                     </div>
                     <div className="flex w-full justify-self-end gap-1 pr-4 pl-4">
-                        <label className="font-semibold">0:00</label>
+                        <label className="font-semibold">{timeProps.actual}</label>
                         <label className="grow slider">
-                            <input className="level" type="range" min="1" max="100" />
+                            <input className="level" value={timeProps.noFormat} type="range" min="0" max={durationProps.noFormat} onChange={e => {
+                            }} />
                         </label>
-                        <label className="font-semibold">6:28</label>
+                        <label className="font-semibold">{durationProps.duration}</label>
                     </div>
                 </div>
                 <div className="flex justify-end pr-5 gap-10">
                     <svg className="hoverable-icon-stroke" width="32px" height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4L21 7M21 7L18 10M21 7H17C16.0707 7 15.606 7 15.2196 7.07686C13.6329 7.39249 12.3925 8.63288 12.0769 10.2196C12 10.606 12 11.0707 12 12C12 12.9293 12 13.394 11.9231 13.7804C11.6075 15.3671 10.3671 16.6075 8.78036 16.9231C8.39397 17 7.92931 17 7 17H3M18 20L21 17M21 17L18 14M21 17H17C16.0707 17 15.606 17 15.2196 16.9231C15.1457 16.9084 15.0724 16.8917 15 16.873M3 7H7C7.92931 7 8.39397 7 8.78036 7.07686C8.85435 7.09158 8.92758 7.1083 9 7.12698" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                     <div>
                         <label className="heart-container">
-                            <input type="checkbox" onChange={(e) => {
-                            }} />
+                            <input type="checkbox" />
                             <svg width="24px" height="24px" viewBox="0 0 24 24" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
                         </label>
                     </div>
                     <label className="slider">
-                        <input type="range" className="level" />
+                        <input type="range" className="level" onChange={(e) => {
+                            audioRef.current.volume = e.target.value / 100;
+                        }} />
                         <svg className="volume hoverable-icon" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24">
                             <g>
                                 <path d="M18.36 19.36a1 1 0 0 1-.705-1.71C19.167 16.148 20 14.142 20 12s-.833-4.148-2.345-5.65a1 1 0 1 1 1.41-1.419C20.958 6.812 22 9.322 22 12s-1.042 5.188-2.935 7.069a.997.997 0 0 1-.705.291z"></path>
@@ -104,7 +159,13 @@ const canciones = [{
 
 }, {
     src: '/src/assets/songs/aquellanoche.mp3',
-    name: 'Aquella Noche',
+    name: 'Aquella Noche (remix)',
     artist: 'BARDERO$',
     imgSrc: '/src/assets/imgs/aquellanoche.jpeg'
-}];
+}, {
+    src: '/src/assets/songs/lanochemaslinda.mp3',
+    name: 'La Noche mas Linda',
+    artist: 'Adalberto Santiago',
+    imgSrc: '/src/assets/imgs/pielcanela.jpeg'
+},
+];
