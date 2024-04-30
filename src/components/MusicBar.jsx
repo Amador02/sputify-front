@@ -1,94 +1,105 @@
 import { NavLink } from 'react-router-dom';
 import album from '../assets/imgs/album.jpeg';
 import { useRef, useState, useEffect } from 'react';
+import YouTube from 'react-youtube';
 
 
 export default function () {
-    const audioRef = useRef();
     const playCheckRef = useRef();
+    const playerRef = useRef();
     const [trackIndex, setTrackIndex] = useState(0);
-    const [currentTrack, setCurrentTrack] = useState(canciones[0]);
-    const [durationProps, setDurationProps] = useState({
-        duration: '0:00',
-        noFormat: 0
+    const [playerState, setPlayerState] = useState({
+        playing: false,
+        duration: 0,
+        durationFormat: '0:00',
+        time: 0,
+        timeFormat: '0:00',
     });
-    const [timeProps, setTimeProps] = useState({
-        actual: '0:00',
-        noFormat: 0
-    });
-
     useEffect(() => {
-        const audio = audioRef.current;
-
-        const loadedMetadataHandler = () => {
-            const minutes = Math.floor(audio.duration / 60);
-            const seconds = Math.floor(audio.duration % 60);
-            setDurationProps({
-                duration: `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
-                noFormat: audio.duration * 10
-            });
-            if (playCheckRef.current.checked) {
-                audioRef.current.play();
-            } else {
-                audioRef.current.pause();
+        if (playerRef.current) {
+            const player = playerRef.current.getInternalPlayer();
+            console.log({ player });
+            if (player) {
+                player.getDuration().then(function (dur) {
+                    setPlayerState((prev) => ({
+                        ...prev,
+                        duration: dur,
+                        durationFormat: createFormatTime(dur),
+                    }));
+                    if (playerRef.current && player) {
+                        player.playVideo();
+                    }
+                }).catch(function (e) { console.error(e) })
             }
-        };
-        const updateTime = () => {
-            const currentTime = Math.floor(audio.currentTime);
-            const minutes = Math.floor(currentTime / 60);
-            const seconds = currentTime % 60;
-            setTimeProps({
-                actual: `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`,
-                noFormat: audio.currentTime * 10
-            })
+            setInterval(() => {
+                if (playerRef.current && playerRef.current.getInternalPlayer()) {
+                    playerRef.current.getInternalPlayer().getCurrentTime().then(function (currentTime) {
+                        setPlayerState(prevState => ({
+                            ...prevState,
+                            time: currentTime,
+                            timeFormat: createFormatTime(currentTime)
+                        }));
+                    }).catch(function (e) { console.error(e) })
+                }
+            }, 1000);
         }
-
-        if (audio) {
-            audio.addEventListener('loadedmetadata', loadedMetadataHandler);
-            audio.addEventListener('timeupdate', updateTime);
-            audio.volume = 0.5;
-        }
-
-        return () => {
-            if (audio) {
-                audio.removeEventListener('loadedmetadata', loadedMetadataHandler);
-                audio.addEventListener('timeupdate', updateTime);
-                audio.volume = 0.5;
-            }
-        };
     }, []);
 
     const handleNext = () => {
-        if (trackIndex >= canciones.length - 1) {
-            setTrackIndex(0);
-            setCurrentTrack(canciones[0]);
-        } else {
-            setTrackIndex((prev) => prev + 1);
-            setCurrentTrack(canciones[trackIndex + 1]);
-        }
+        const newIndex = (trackIndex + 1) % canciones.length;
+        setTrackIndex(newIndex);
+        playerRef.current.getInternalPlayer().loadVideoById(canciones[newIndex].src);
+        playerRef.current.getInternalPlayer().playVideo();
     };
     const handlePrev = () => {
-        if (trackIndex <= 0) {
-            setTrackIndex(canciones.length - 1);
-            setCurrentTrack(canciones[canciones.length - 1]);
-
-        } else {
-            setTrackIndex((prev) => prev - 1);
-            setCurrentTrack(canciones[trackIndex - 1]);
-        }
+        const newIndex = (trackIndex - 1 + canciones.length) % canciones.length;
+        setTrackIndex(newIndex);
+        playerRef.current.getInternalPlayer().loadVideoById(canciones[newIndex].src);
+        playerRef.current.getInternalPlayer().playVideo();
     };
     return (
         <>
-            <audio src={currentTrack.src} ref={audioRef} onEnded={e => {
-                handleNext();
-            }} />
+            <YouTube
+                ref={playerRef}
+                videoId={canciones[trackIndex].src}
+                opts={{
+                    playerVars: {
+                        autoplay: 1,
+                        loop: 1,
+                        modestbranding: 1,
+                        playsinline: 1,
+                        start: 0,
+                        fs: 0,
+                    }
+                }}
+                onStateChange={(e) => {
+                    switch (e.data) {
+                        case YouTube.PlayerState.ENDED:
+                            handleNext();
+                            break;
+                        case YouTube.PlayerState.PAUSED:
+                            setPlayerState((prev) => ({
+                                ...prev,
+                                playing: false,
+                            }));
+                            break;
+                        case YouTube.PlayerState.PLAYING:
+                            setPlayerState((prev) => ({
+                                ...prev,
+                                playing: true,
+                            }));
+                            break;
+                        default: break;
+                    }
+                }}
+            />
             <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
                 <div className='group ml-2'>
                     <NavLink className='flex pr-6 flex-row w-72 h-max text-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/piel-canela'>
-                        <img className='h-16 w-16 m-0 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={currentTrack.imgSrc} alt="album" />
+                        <img className='h-16 w-16 m-0 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={canciones[trackIndex].imgSrc} alt="album" />
                         <div className="items-center text-left">
-                            <h1 className="text-xl text-white font-semibold">{currentTrack.name}</h1>
-                            <h1 className="text-xs text-neutral-300">{currentTrack.artist}</h1>
+                            <h1 className="text-xl text-white font-semibold">{canciones[trackIndex].name}</h1>
+                            <h1 className="text-xs text-neutral-300">{canciones[trackIndex].artist}</h1>
                         </div>
                     </NavLink>
                 </div>
@@ -99,11 +110,11 @@ export default function () {
                         </div>
                         <div className="flex text-center items-center justify-center ">
                             <label className="container hoverable-icon w-[40px]">
-                                <input ref={playCheckRef} type="checkbox" onChange={e => {
+                                <input value={playerState.playing} ref={playCheckRef} type="checkbox" onChange={e => {
                                     if (e.target.checked) {
-                                        audioRef.current.play();
+                                        playerRef.current.getInternalPlayer().playVideo();
                                     } else {
-                                        audioRef.current.pause();
+                                        playerRef.current.getInternalPlayer().pauseVideo();
                                     }
                                 }} />
                                 <svg viewBox="0 0 384 512" height="1em" className="play"><path d={playSVG}></path></svg>
@@ -115,12 +126,21 @@ export default function () {
                         </div>
                     </div>
                     <div className="flex w-full justify-self-end gap-1 pr-4 pl-4">
-                        <label className="font-semibold">{timeProps.actual}</label>
+                        <label className="font-semibold">{playerState.timeFormat}</label>
                         <label className="grow slider">
-                            <input className="level" value={timeProps.noFormat} type="range" min="0" max={durationProps.noFormat} onChange={e => {
-                            }} />
+                            <input className="level" type="range"
+                                min={0}
+                                max={playerState.duration}
+                                value={playerState.time}
+                                onChange={(e) => {
+                                    playerRef.current.getInternalPlayer().seekTo(parseFloat(e.target.value));
+                                    setPlayerState({
+                                        ...playerState,
+                                        time: parseFloat(e.target.value),
+                                    })
+                                }} />
                         </label>
-                        <label className="font-semibold">{durationProps.duration}</label>
+                        <label className="font-semibold">{playerState.durationFormat}</label>
                     </div>
                 </div>
                 <div className="flex justify-end pr-5 gap-10">
@@ -150,20 +170,25 @@ export default function () {
 const pauseSVG = "M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z";
 const playSVG = "M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z";
 
+const createFormatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return (`${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
+}
 
 const canciones = [{
-    src: '/src/assets/songs/pielcanela.mp3',
+    src: 'RiF3l0ZZeeU',
     name: 'Piel Canela (cover)',
     artist: 'Carlos Vives',
     imgSrc: '/src/assets/imgs/pielcanela.jpeg'
 
 }, {
-    src: '/src/assets/songs/aquellanoche.mp3',
+    src: 'a5fHoAx12DY',
     name: 'Aquella Noche (remix)',
     artist: 'BARDERO$',
     imgSrc: '/src/assets/imgs/aquellanoche.jpeg'
 }, {
-    src: '/src/assets/songs/lanochemaslinda.mp3',
+    src: '_kxz7WX4mLU',
     name: 'La Noche mas Linda',
     artist: 'Adalberto Santiago',
     imgSrc: '/src/assets/imgs/pielcanela.jpeg'
