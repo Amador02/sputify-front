@@ -1,7 +1,7 @@
-function LogoFull({ fill }) {
+function LogoFull({ fill, width = "64px", height = "64px", className }) {
     if (fill == null) fill = "white";
     return (
-        <svg width="64px" height="64px" viewBox="0 0 32 32" className="scale-[2.5] translate-y-16" xmlns="http://www.w3.org/2000/svg" fill={fill}>
+        <svg width={width} height={height} viewBox="0 0 25.8 8" className={className} xmlns="http://www.w3.org/2000/svg" fill={fill}>
             <path
                 d="m15.02,4.98l0,-1.69l0.65,0l0,1.52q0,0.16 0.08,0.29q0.08,0.13 0.2,0.21q0.13,0.07 0.29,0.07q0.16,0 0.29,-0.07q0.13,-0.08 0.2,-0.21q0.08,-0.13 0.08,-0.29l0,-1.52l0.65,0l0,2.69l-0.65,0l0,-0.24q-0.14,0.14 -0.33,0.23q-0.19,0.09 -0.4,0.09q-0.29,0 -0.53,-0.14q-0.24,-0.14 -0.38,-0.38q-0.14,-0.24 -0.14,-0.54z"
                 fillRule="evenodd"

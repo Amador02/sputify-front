@@ -2,11 +2,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Home, SongDetail, ArtistDetail, Search } from './'
 import { AnimatePresence } from 'framer-motion';
 
-export default function () {
+export default function router({setVideoUrl}) {
     return (
 
         <div className="flex flex-grow flex-col h-full justify-center items-center">
-            <div className="w-full h-full px-6 overflow-y-scroll hide-scrollbar flex xl:flex-row flex-col">
+            <div className="w-full h-full px-6 hide-scrollbar flex xl:flex-row flex-col">
                     <Routes>
                         <Route path="/home" element={<Home />} />
                         <Route
@@ -23,7 +23,7 @@ export default function () {
                         />
                         <Route path="/error" element={<button >Error</button>} />
                         <Route path="/home" element={<Home />} />
-                        <Route path="/search" element={<Search />} />
+                        <Route path="/search" element={<Search setVideoUrl={setVideoUrl} />} />
                         <Route path="/artists" element={<div>Artistas</div>} />
                         <Route path="/feed" element={<div>Alimentar</div>} />
                         <Route path="/songs" element={<div>Canciones</div>} />

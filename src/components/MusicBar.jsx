@@ -2,11 +2,11 @@ import { NavLink } from 'react-router-dom';
 import album from '../assets/imgs/album.jpeg';
 import { useRef, useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player/youtube'
 
 
-export default function () {
-    const playCheckRef = useRef();
-    const playerRef = useRef();
+export default function musicBar({ videoUrl,  setVideoUrl }) {
+    const playerRef = useRef(undefined);
     const [trackIndex, setTrackIndex] = useState(0);
     const [playerState, setPlayerState] = useState({
         playing: false,
@@ -15,91 +15,99 @@ export default function () {
         time: 0,
         timeFormat: '0:00',
     });
-    useEffect(() => {
-        if (playerRef.current) {
-            const player = playerRef.current.getInternalPlayer();
-            console.log({ player });
-            if (player) {
-                player.getDuration().then(function (dur) {
-                    setPlayerState((prev) => ({
-                        ...prev,
-                        duration: dur,
-                        durationFormat: createFormatTime(dur),
-                    }));
-                    if (playerRef.current && player) {
-                        player.playVideo();
-                    }
-                }).catch(function (e) { console.error(e) })
-            }
-            setInterval(() => {
-                if (playerRef.current && playerRef.current.getInternalPlayer()) {
-                    playerRef.current.getInternalPlayer().getCurrentTime().then(function (currentTime) {
-                        setPlayerState(prevState => ({
-                            ...prevState,
-                            time: currentTime,
-                            timeFormat: createFormatTime(currentTime)
-                        }));
-                    }).catch(function (e) { console.error(e) })
-                }
-            }, 1000);
-        }
-    }, []);
+    const [volume, setVolume] = useState(50)
+    const [lastVolume, setLastVolume] = useState(null)
 
     const handleNext = () => {
-        const newIndex = (trackIndex + 1) % canciones.length;
-        setTrackIndex(newIndex);
-        playerRef.current.getInternalPlayer().loadVideoById(canciones[newIndex].src);
-        playerRef.current.getInternalPlayer().playVideo();
+        playerRef.current.getInternalPlayer().seekTo(0)
+        // const newIndex = (trackIndex + 1) % canciones.length;
+        // setTrackIndex(newIndex);
+        // playerRef.current.getInternalPlayer().loadVideoById(canciones[newIndex].src)
+        // setVideoUrl(canciones[newIndex].src);
+        // playerRef.current.getInternalPlayer().playVideo()
+
     };
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (playerRef.current && playerRef.current.getDuration()) {
+                const duration = playerRef.current.getDuration();
+                const currentTime = playerRef.current.getCurrentTime();
+                setPlayerState(prevState => ({
+                    ...prevState,
+                    duration,
+                    durationFormat: createFormatTime(duration),
+                    time: currentTime,
+                    timeFormat: createFormatTime(currentTime)
+                }));
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const handlePrev = () => {
-        const newIndex = (trackIndex - 1 + canciones.length) % canciones.length;
-        setTrackIndex(newIndex);
-        playerRef.current.getInternalPlayer().loadVideoById(canciones[newIndex].src);
-        playerRef.current.getInternalPlayer().playVideo();
+        // const newIndex = (trackIndex - 1 + canciones.length) % canciones.length;
+        // setTrackIndex(newIndex);
+        // setVideoUrl(canciones[newIndex].src)
+        // playerRef.current.getInternalPlayer().loadVideoById(canciones[newIndex].src);
+        // playerRef.current.getInternalPlayer().playVideo();
     };
+
     return (
         <>
-            <YouTube
+            <ReactPlayer
+            className="hidden"
                 ref={playerRef}
-                videoId={canciones[trackIndex].src}
-                opts={{
-                    playerVars: {
-                        autoplay: 1,
-                        loop: 1,
-                        modestbranding: 1,
-                        playsinline: 1,
-                        start: 0,
-                        fs: 0,
-                    }
+                controls
+                url={videoUrl}
+                playing={playerState.playing}
+                config={{
+                    youtube: {
+                        playerVars: {
+                            autoplay: 1,
+                            loop: 1,
+                            modestbranding: 1,
+                            playsinline: 1,
+                            start: 0,
+                            fs: 0,
+                            disablekb: 1,
+                        },
+                    },
                 }}
-                onStateChange={(e) => {
-                    switch (e.data) {
-                        case YouTube.PlayerState.ENDED:
-                            handleNext();
-                            break;
-                        case YouTube.PlayerState.PAUSED:
-                            setPlayerState((prev) => ({
-                                ...prev,
-                                playing: false,
-                            }));
-                            break;
-                        case YouTube.PlayerState.PLAYING:
-                            setPlayerState((prev) => ({
-                                ...prev,
-                                playing: true,
-                            }));
-                            break;
-                        default: break;
-                    }
+                onPlay={() => setPlayerState({ ...playerState, playing: true })}
+                onPause={() => setPlayerState({ ...playerState, playing: false })}
+                onEnded={handleNext}
+                volume={volume / 100}
+                onSeek={(time) => {
+                    playerRef.current.seekTo(time);
+                    let timeFormat = createFormatTime(time);
+                    setPlayerState(prev => ({
+                        ...prev,
+                        time,
+                        timeFormat
+                    }));
+                }}
+                onDuration={(duration) => {
+                    setPlayerState(prev => ({
+                       ...prev,
+                        duration,
+                        durationFormat: createFormatTime(duration)
+                    }));
+                }}
+                onChange={(event) => {
+                    event.preventDefault();
+                    console.log({event});
                 }}
             />
             <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
                 <div className='group ml-2'>
                     <NavLink className='flex pr-6 flex-row w-72 h-max text-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/piel-canela'>
-                        <img className='h-16 w-16 m-0 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={canciones[trackIndex].imgSrc} alt="album" />
+                        <img className='h-16 w-16 m-0 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src="/src/assets/imgs/pielcanela.jpeg" alt="album" />
                         <div className="items-center text-left">
-                            <h1 className="text-xl text-white font-semibold">{canciones[trackIndex].name}</h1>
-                            <h1 className="text-xs text-neutral-300">{canciones[trackIndex].artist}</h1>
+                            <h1 className="text-xl text-white font-semibold">Nombre</h1>
+                            <h1 className="text-xs text-neutral-300">Artista</h1>
                         </div>
                     </NavLink>
                 </div>
@@ -110,12 +118,12 @@ export default function () {
                         </div>
                         <div className="flex text-center items-center justify-center ">
                             <label className="container hoverable-icon w-[40px]">
-                                <input value={playerState.playing} ref={playCheckRef} type="checkbox" onChange={e => {
-                                    if (e.target.checked) {
-                                        playerRef.current.getInternalPlayer().playVideo();
-                                    } else {
-                                        playerRef.current.getInternalPlayer().pauseVideo();
-                                    }
+                                <input checked={playerState.playing} type="checkbox" onChange={() => {
+                                    setPlayerState(prevState => ({
+                                        ...prevState,
+                                        playing: !prevState.playing
+                                    })
+                                    )
                                 }} />
                                 <svg viewBox="0 0 384 512" height="1em" className="play"><path d={playSVG}></path></svg>
                                 <svg viewBox="0 0 320 512" height="1em" className="pause"><path d={pauseSVG}></path></svg>
@@ -134,10 +142,6 @@ export default function () {
                                 value={playerState.time}
                                 onChange={(e) => {
                                     playerRef.current.getInternalPlayer().seekTo(parseFloat(e.target.value));
-                                    setPlayerState({
-                                        ...playerState,
-                                        time: parseFloat(e.target.value),
-                                    })
                                 }} />
                         </label>
                         <label className="font-semibold">{playerState.durationFormat}</label>
@@ -152,13 +156,30 @@ export default function () {
                         </label>
                     </div>
                     <label className="slider">
-                        <input type="range" className="level" onChange={(e) => {
-                            audioRef.current.volume = e.target.value / 100;
+                        <input id='barraVol' type="range" className="level" onChange={(e) => {
+                            setVolume(e.target.value)
+                            setLastVolume(null)
                         }} />
-                        <svg className="volume hoverable-icon" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24">
+                        <svg className="volume hoverable-icon" version="1.1" xmlnsXlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 24 24" onClick={(e) => {
+                            let barra = document.getElementById("barraVol");
+                            if (lastVolume === null) {
+                                setLastVolume(barra.value);
+                                barra.value = 0
+                                setVolume(0)
+                            } else {
+                                barra.value = lastVolume
+                                setVolume(lastVolume)
+                                setLastVolume(null)
+                            }
+                        }}>
                             <g>
-                                <path d="M18.36 19.36a1 1 0 0 1-.705-1.71C19.167 16.148 20 14.142 20 12s-.833-4.148-2.345-5.65a1 1 0 1 1 1.41-1.419C20.958 6.812 22 9.322 22 12s-1.042 5.188-2.935 7.069a.997.997 0 0 1-.705.291z"></path>
-                                <path d="M15.53 16.53a.999.999 0 0 1-.703-1.711C15.572 14.082 16 13.054 16 12s-.428-2.082-1.173-2.819a1 1 0 1 1 1.406-1.422A6 6 0 0 1 18 12a6 6 0 0 1-1.767 4.241.996.996 0 0 1-.703.289zM12 22a1 1 0 0 1-.707-.293L6.586 17H4c-1.103 0-2-.897-2-2V9c0-1.103.897-2 2-2h2.586l4.707-4.707A.998.998 0 0 1 13 3v18a1 1 0 0 1-1 1z" ></path>
+                                {volume >= 50 && (
+                                    <path d="M18.36 19.36a1 1 0 0 1-.705-1.71C19.167 16.148 20 14.142 20 12s-.833-4.148-2.345-5.65a1 1 0 1 1 1.41-1.419C20.958 6.812 22 9.322 22 12s-1.042 5.188-2.935 7.069a.997.997 0 0 1-.705.291z" />
+                                )}
+                                {volume > 0 && (
+                                    <path d="M15.53 16.53a.999.999 0 0 1-.703-1.711C15.572 14.082 16 13.054 16 12s-.428-2.082-1.173-2.819a1 1 0 1 1 1.406-1.422A6 6 0 0 1 18 12a6 6 0 0 1-1.767 4.241.996.996 0 0 1-.703.289z" />
+                                )}
+                                <path d="M12 22a1 1 0 0 1-.707-.293L6.586 17H4c-1.103 0-2-.897-2-2V9c0-1.103.897-2 2-2h2.586l4.707-4.707A.998.998 0 0 1 13 3v18a1 1 0 0 1-1 1z" />
                             </g>
                         </svg>
                     </label>
@@ -175,22 +196,3 @@ const createFormatTime = (time) => {
     const seconds = Math.floor(time % 60);
     return (`${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
 }
-
-const canciones = [{
-    src: 'RiF3l0ZZeeU',
-    name: 'Piel Canela (cover)',
-    artist: 'Carlos Vives',
-    imgSrc: '/src/assets/imgs/pielcanela.jpeg'
-
-}, {
-    src: 'a5fHoAx12DY',
-    name: 'Aquella Noche (remix)',
-    artist: 'BARDERO$',
-    imgSrc: '/src/assets/imgs/aquellanoche.jpeg'
-}, {
-    src: '_kxz7WX4mLU',
-    name: 'La Noche mas Linda',
-    artist: 'Adalberto Santiago',
-    imgSrc: '/src/assets/imgs/pielcanela.jpeg'
-},
-];
