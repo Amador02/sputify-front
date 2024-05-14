@@ -70,6 +70,20 @@ function App() {
         authorid: "fuego-000",
         url: "https://www.youtube.com/watch?v=oD5f55ohsc4",
         src: "/src/assets/imgs/felizcumple.webp"
+      },
+      {
+        song: "Enamorado Tuyo",
+        songid: "enamorado-tuyo-000",
+        author: "Cuarteto de Nos",
+        authorid: "cuarteto-de-nos-000",
+        url: "https://www.youtube.com/watch?v=R5cbxTPZNL0",
+        src: "/src/assets/imgs/enamoradotuyo.jpeg"
+      }, {
+        song: "SUPERMODEL",
+        songid: "supermodel-000",
+        author: "Måneskin",
+        authorid: "ma-neskin-000",
+        url: "https://www.youtube.com/watch?v=jODrVofka54",
       }
     ])
   return (
