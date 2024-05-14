@@ -4,16 +4,6 @@ import { NavLink } from 'react-router-dom';
 
 const transition = { duration: 0.25, ease: [0.43, 0.13, 0.23, 0.96] };
 
-/*
-key={cancion.songid}
-                            song={cancion.song}
-                            songid={cancion.songid}
-                            author={cancion.author}
-                            src={cancion.src}
-                            authorid={cancion.authorid}
-                            url={cancion.url}
-                            setVideoUrl={setVideoUrl}
-*/
 const musicCard = ({ playerState, key, cancion, setActiveSong, activeSong, setPlayerState }) => {
     return (
         <div key={key} className='max-h-fit min-h-fit h-fit w-fit min-w-fit max-w-fit flex flex-col overflow-clip '>

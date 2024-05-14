@@ -62,6 +62,14 @@ function App() {
         author: "Fuego",
         authorid: "fuego-000",
         url: "https://www.youtube.com/watch?v=UdztftsoybQ"
+      },
+      {
+        song: "Normal",
+        songid: "normal-000",
+        author: "Ferxxo",
+        authorid: "fuego-000",
+        url: "https://www.youtube.com/watch?v=oD5f55ohsc4",
+        src: "/src/assets/imgs/felizcumple.webp"
       }
     ])
   return (
@@ -70,9 +78,7 @@ function App() {
         loggedIn ?
           <div className='w-svw h-svh flex flex-col' >
             <Header setLoggedIn={setLoggedIn} />
-            <div className='flex flex-row grow'>
-              <RouterComponent setPlayerState={setPlayerState} playerState={playerState} canciones={canciones} setActiveSong={setActiveSong} activeSong={activeSong} />
-            </div>
+            <RouterComponent setPlayerState={setPlayerState} playerState={playerState} canciones={canciones} setActiveSong={setActiveSong} activeSong={activeSong} />
             <MusicBar setPlayerState={setPlayerState} playerState={playerState} activeSong={activeSong} setActiveSong={setActiveSong} />
           </div>
           : <MainMenu></MainMenu>
