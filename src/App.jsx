@@ -84,6 +84,20 @@ function App() {
         author: "Måneskin",
         authorid: "ma-neskin-000",
         url: "https://www.youtube.com/watch?v=jODrVofka54",
+      }, {
+        song: "Muy Feliz (Remix)",
+        songid: "muy-feliz-000",
+        author: "Ñejo",
+        authorid: "nejo-000",
+        url: "https://www.youtube.com/watch?v=Bsr1qL3sv9w",
+        src: "/src/assets/imgs/muyfeliz.jpeg"
+      }, {
+        song: "Agarrala Pegala Azotala",
+        songid: "agarrala-pegala-000",
+        author: "Trebol Clan",
+        authorid: "trebol-clan-000",
+        url: "https://www.youtube.com/watch?v=VnQ1mLNHJC0",
+        src: "/src/assets/imgs/agarrala.png"
       }
     ])
   return (
