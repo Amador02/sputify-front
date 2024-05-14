@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 export default function router({ setPlayerState, playerState, canciones, setActiveSong, activeSong }) {
     return (
 
-        <div className="grow flex flex-col max-h-full h-full overflow-y-scroll overflow-x-hidden justify-center items-center">
+        <div className="grow flex flex-col max-h-full h-full overflow-y-auto overflow-x-hidden justify-center items-center">
             <div className="w-full h-full flex xl:flex-row flex-col">
                 <Routes>
                     <Route path="/home" element={<Home setPlayerState={setPlayerState} playerState={playerState} setActiveSong={setActiveSong} canciones={canciones} activeSong={activeSong} />} />
