@@ -15,18 +15,41 @@ const songSlider = ({ setPlayerState, playerState, setActiveSong, activeSong, ca
         return <div className={className} style={arrowStyle} onClick={onClick} />;
     };
     const settings = {
-        dots: true,
+      dots: true,
         infinite: true,
-        speed: 200,
-        slidesToShow: 3,
+        slidesToShow: 5,
         slidesToScroll: 1,
+        initialSlide: 0,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+            },
+          },
+          {
+            breakpoint: 640,
+            settings: {
+              slidesToShow: 2,
+            },
+          }, 
+          {
+            breakpoint: 1280,
+            settings: {
+              slidesToShow: 4,
+            },
+          }
+        ],
         autoplay: true,
+        speed: 250,
         autoplaySpeed: 3000,
+        cssEase: 'linear',
         nextArrow: <SliderArrow position="next" />,
         prevArrow: <SliderArrow position="prev" />,
     }
     return (
-        <div className='overflow-hidden max-w-[43rem] w-min'>
+        <div className='overflow-hidden sm:min-w-[48rem] sm:max-w-[48rem] max-h-[21rem] min-h-[21rem] h-max lg:min-w-[62rem] lg:max-w-[62rem] min-w-[34rem] max-w-[34rem] xl:min-w-[76rem] p-10 w-fit'>
             <Slider {...settings}>
                 {canciones.map((cancion) => {
                     return (

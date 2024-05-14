@@ -7,7 +7,7 @@ function SongDetail({ canciones, activeSong, playerState, setPlayerState, setAct
     const { songid } = useParams();
     const c = canciones.find(ca => ca.songid === songid);
     const [color, setColor] = useState("#122133")
-    if (c)
+    if (c && c.src)
         getColor(c.src, "hex").then(cc => {
             setColor(cc)
         }).catch((e) => { console.error(e); });
@@ -21,11 +21,11 @@ function SongDetail({ canciones, activeSong, playerState, setPlayerState, setAct
             {
                 c && (
                     <div className="h-full">
-                        <div className="flex flex-col justify-center items-start">
-                            <div className='w-screen h-[14rem] overflow-hidden'>
+                        <div className="flex flex-col justify-center items-center">
+                            <div className='w-screen pb-1 overflow-hidden'>
                                 <div style={{ background: `linear-gradient(${color}, transparent)` }} className='relative flex items-center justify-top p-3 flex-col'>
                                     <div className='relative'>
-                                        <img className="w-40 h-auto transition-all ease-in-out hover:scale-[1.05] active:scale-[0.95] rounded-xl shadow-2xl cursor-pointer "
+                                        <img className="w-40 h-40 transition-all ease-in-out bg-black hover:scale-[1.05] active:scale-[0.95] rounded-xl shadow-md cursor-pointer "
 
                                             src={c.src} alt="" onClick={() => {
                                                 if (activeSong.songid !== c.songid) {
@@ -41,7 +41,7 @@ function SongDetail({ canciones, activeSong, playerState, setPlayerState, setAct
                                                     }))
                                                 }
                                             }} />
-                                        <div className='absolute top-0 left-0 w-full h-full pointer-events-none flex items-center justify-center'>
+                                        <div className='absolute overflow-hidden top-0 left-0 w-full h-full pointer-events-none flex items-center justify-center'>
                                             <svg
                                                 className='w-8 z-10  fill-white pointer-events-none shadow-2xl'
                                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
