@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import { MusicCard } from '.';
 
-const songSlider = ({ setActiveSong, activeSong, canciones }) => {
+const songSlider = ({ setPlayerState, playerState, setActiveSong, activeSong, canciones }) => {
     const SliderArrow = ({ className, style, onClick, position }) => {
         const arrowStyle =
             position === 'next'
@@ -30,7 +30,7 @@ const songSlider = ({ setActiveSong, activeSong, canciones }) => {
             <Slider {...settings}>
                 {canciones.map((cancion) => {
                     return (
-                        <MusicCard key={cancion.songid} cancion={cancion} setActiveSong={setActiveSong} activeSong={activeSong} />
+                        <MusicCard setPlayerState={setPlayerState} playerState={playerState} key={cancion.songid} cancion={cancion} setActiveSong={setActiveSong} activeSong={activeSong} />
                     )
                 })
                 }

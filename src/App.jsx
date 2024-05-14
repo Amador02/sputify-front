@@ -6,6 +6,13 @@ import { MusicBar, Header, RouterComponent, LoginViewRouting } from './component
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
+  const [playerState, setPlayerState] = useState({
+    playing: false,
+    duration: 0,
+    durationFormat: '0:00',
+    time: 0,
+    timeFormat: '0:00',
+  });
   const [activeSong, setActiveSong] = useState(
     {
       song: "Happier",
@@ -64,9 +71,9 @@ function App() {
           <div className='w-svw h-svh flex flex-col' >
             <Header setLoggedIn={setLoggedIn} />
             <div className='flex flex-row grow'>
-              <RouterComponent canciones={canciones} setActiveSong={setActiveSong} activeSong={activeSong} />
+              <RouterComponent setPlayerState={setPlayerState} playerState={playerState} canciones={canciones} setActiveSong={setActiveSong} activeSong={activeSong} />
             </div>
-            <MusicBar activeSong={activeSong} setActiveSong={setActiveSong} />
+            <MusicBar setPlayerState={setPlayerState} playerState={playerState} activeSong={activeSong} setActiveSong={setActiveSong} />
           </div>
           : <MainMenu></MainMenu>
       }

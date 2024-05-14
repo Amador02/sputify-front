@@ -1,8 +1,8 @@
 
 import { SongSlider } from '.';
-const Home = ({ setActiveSong, activeSong, canciones }) => {
+const Home = ({ setPlayerState, playerState, setActiveSong, activeSong, canciones }) => {
     return (
-        <SongSlider setActiveSong={setActiveSong} activeSong={activeSong} canciones={canciones} />
+        <SongSlider setPlayerState={setPlayerState} playerState={playerState} setActiveSong={setActiveSong} activeSong={activeSong} canciones={canciones} />
     )
 }
 export default Home;
