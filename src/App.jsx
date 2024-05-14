@@ -1,12 +1,62 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css';
-import MainMenu  from './login/MainMenu';
+import MainMenu from './login/MainMenu';
 import { MusicBar, Header, RouterComponent, LoginViewRouting } from './components'
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/watch?v=Lg_Pn45gyMs");
+  const [activeSong, setActiveSong] = useState(
+    {
+      song: "Happier",
+      songid: "happier-000",
+      author: "Marshmello",
+      authorid: "marshmello-000",
+      src: "/src/assets/imgs/album.jpeg",
+      url: "https://www.youtube.com/watch?v=m7Bc3pLyij0"
+    },
+  );
+  const [canciones, setCanciones] = useState(
+    [
+      {
+        song: "Happier",
+        songid: "happier-000",
+        author: "Marshmello",
+        authorid: "marshmello-000",
+        src: "/src/assets/imgs/album.jpeg",
+        url: "https://www.youtube.com/watch?v=m7Bc3pLyij0"
+      },
+      {
+        song: "Human",
+        songid: "human-000",
+        author: "Rag'n'Bone Man",
+        authorid: "rag-n-bone-man-000",
+        src: "/src/assets/imgs/aquellanoche.jpeg",
+        url: "https://www.youtube.com/watch?v=L3wKzyIN1yk"
+      },
+      {
+        song: "Piel Canela",
+        songid: "piel-canela-000",
+        author: "Carlos Vives",
+        authorid: "carlos-vives-000",
+        src: "/src/assets/imgs/pielcanela.jpeg",
+        url: "https://www.youtube.com/watch?v=42Ph2v0NE7Y"
+      },
+      {
+        song: "Te Pintaron Pajaritos",
+        songid: "te-pintaron-000",
+        author: "Yandar & Yostin",
+        authorid: "yandar-yostin-000",
+        url: "https://www.youtube.com/watch?v=3Kr4OHIhWis"
+      },
+      {
+        song: "Una Vaina Loca",
+        songid: "una-vaina-loca-000",
+        author: "Fuego",
+        authorid: "fuego-000",
+        url: "https://www.youtube.com/watch?v=UdztftsoybQ"
+      }
+    ])
   return (
     <Router>
       {
@@ -14,11 +64,10 @@ function App() {
           <div className='w-svw h-svh flex flex-col' >
             <Header setLoggedIn={setLoggedIn} />
             <div className='flex flex-row grow'>
-              <RouterComponent setVideoUrl={setVideoUrl} />
+              <RouterComponent canciones={canciones} setActiveSong={setActiveSong} activeSong={activeSong} />
             </div>
-            <MusicBar videoUrl={videoUrl} setVideoUrl={setVideoUrl} />
+            <MusicBar activeSong={activeSong} setActiveSong={setActiveSong} />
           </div>
-          // : <MainMenu setLoggedIn={setLoggedIn} />
           : <MainMenu></MainMenu>
       }
     </Router>);

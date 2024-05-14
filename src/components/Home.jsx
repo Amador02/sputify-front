@@ -1,11 +1,8 @@
-import transicion from "./transicion";
 
-
-const HomeAlone = () => {
+import { SongSlider } from '.';
+const Home = ({ setActiveSong, activeSong, canciones }) => {
     return (
-        <div>Hola</div>)
-}
-const Home = () => {
-    return transicion(HomeAlone);
+        <SongSlider setActiveSong={setActiveSong} activeSong={activeSong} canciones={canciones} />
+    )
 }
 export default Home;

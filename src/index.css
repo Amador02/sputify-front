@@ -241,18 +241,25 @@
   position: relative;
   top: 0;
   left: 0;
-  height: 50px;
-  width: 50px;
-  transition: all 0.3s;
-  fill: #666;
+  height: 40px;
+  width: 40px;
+  transition: all 100ms;
+  fill: #080e16;
+  stroke: white;
+  stroke-width: 1.5px;
 }
 
 .heart-container svg:hover {
   transform: scale(1.1);
 }
 
+.heart-container svg:active {
+  transform: scale(0.9);
+}
+
 .heart-container input:checked~svg {
   fill: #E3474F;
+  stroke: #E3474F;
 }
 
 

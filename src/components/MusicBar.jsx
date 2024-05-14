@@ -5,7 +5,7 @@ import YouTube from 'react-youtube';
 import ReactPlayer from 'react-player/youtube'
 
 
-export default function musicBar({ videoUrl,  setVideoUrl }) {
+export default function musicBar({ activeSong, setActiveSong }) {
     const playerRef = useRef(undefined);
     const [trackIndex, setTrackIndex] = useState(0);
     const [playerState, setPlayerState] = useState({
@@ -56,12 +56,13 @@ export default function musicBar({ videoUrl,  setVideoUrl }) {
     };
 
     return (
+
         <>
             <ReactPlayer
-            className="hidden"
+                className="hidden"
                 ref={playerRef}
                 controls
-                url={videoUrl}
+                url={activeSong.url}
                 playing={playerState.playing}
                 config={{
                     youtube: {
@@ -91,23 +92,23 @@ export default function musicBar({ videoUrl,  setVideoUrl }) {
                 }}
                 onDuration={(duration) => {
                     setPlayerState(prev => ({
-                       ...prev,
+                        ...prev,
                         duration,
                         durationFormat: createFormatTime(duration)
                     }));
                 }}
                 onChange={(event) => {
                     event.preventDefault();
-                    console.log({event});
+                    console.log({ event });
                 }}
             />
             <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
-                <div className='group ml-2'>
-                    <NavLink className='flex pr-6 flex-row w-72 h-max text-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/piel-canela'>
-                        <img className='h-16 w-16 m-0 border-4 b border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src="/src/assets/imgs/pielcanela.jpeg" alt="album" />
-                        <div className="items-center text-left">
-                            <h1 className="text-xl text-white font-semibold">Nombre</h1>
-                            <h1 className="text-xs text-neutral-300">Artista</h1>
+                <div className='group ml-2 justify-start'>
+                    <NavLink className='flex pr-6 flex-row w-72 h-max justify-start items-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to='/songs/piel-canela'>
+                        <img className='min-h-16 min-w-16 max-h-16 max-w-16 m-0 border-4 border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={activeSong.src} alt="album" />
+                        <div className="grow items-center text-left">
+                            <h1 className="text-xl text-white font-semibold">{activeSong.song}</h1>
+                            <h1 className="text-xs text-neutral-300">{activeSong.author}</h1>
                         </div>
                     </NavLink>
                 </div>
@@ -147,12 +148,11 @@ export default function musicBar({ videoUrl,  setVideoUrl }) {
                         <label className="font-semibold">{playerState.durationFormat}</label>
                     </div>
                 </div>
-                <div className="flex justify-end pr-5 gap-10">
-                    <svg className="hoverable-icon-stroke" width="32px" height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 4L21 7M21 7L18 10M21 7H17C16.0707 7 15.606 7 15.2196 7.07686C13.6329 7.39249 12.3925 8.63288 12.0769 10.2196C12 10.606 12 11.0707 12 12C12 12.9293 12 13.394 11.9231 13.7804C11.6075 15.3671 10.3671 16.6075 8.78036 16.9231C8.39397 17 7.92931 17 7 17H3M18 20L21 17M21 17L18 14M21 17H17C16.0707 17 15.606 17 15.2196 16.9231C15.1457 16.9084 15.0724 16.8917 15 16.873M3 7H7C7.92931 7 8.39397 7 8.78036 7.07686C8.85435 7.09158 8.92758 7.1083 9 7.12698" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                <div className="flex pl-10 pr-5 gap-2">
                     <div>
                         <label className="heart-container">
                             <input type="checkbox" />
-                            <svg width="24px" height="24px" viewBox="0 0 24 24" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                            <svg viewBox="0 0 24 24" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
                         </label>
                     </div>
                     <label className="slider">
