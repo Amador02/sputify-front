@@ -9,7 +9,9 @@ import RouterComponent from './RouterComponent';
 import LoginViewRouting from './LoginViewRouting';
 import MusicCard from './MusicCard';
 import SongSlider from './SongSlider';
+import BusquedaOr from './BusquedaOr';
+import Loader from './Loader';
 
 export {
-    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, Search, Header, RouterComponent, LoginViewRouting, MusicCard, SongSlider
+    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, Search, Header, RouterComponent, LoginViewRouting, MusicCard, SongSlider, BusquedaOr, Loader
 }
