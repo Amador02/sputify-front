@@ -7,7 +7,6 @@ const Home = ({ setPlayerState, playerState, setActiveSong, activeSong, cancione
             <SongSlider setPlayerState={setPlayerState} playerState={playerState} setActiveSong={setActiveSong} activeSong={activeSong} canciones={canciones} />
             <label className='font-bold text-3xl'>Tu Próximo Descubrimiento</label>
             <SongSlider setPlayerState={setPlayerState} playerState={playerState} setActiveSong={setActiveSong} activeSong={activeSong} canciones={canciones} />
-            <label>...</label>
         </div>
     )
 }

@@ -1,8 +1,14 @@
 import '../assets/styles/search.css';
 import React, { useEffect, useState } from 'react';
 
-const SearchComp = ({ onSearch = (text) => { }, placeholder = "Buscar...", inputRef, onChange = (text) => { }, initialTextValue = '' }) => {
-    const [searchTerm, setSearchTerm] = useState(initialTextValue);
+const SearchComp = ({ onSearch = (text) => {  }, placeholder = "Buscar...", inputRef, onChange = (text) => { }, initialNumberValue = 0 }) => {
+    
+    let value = undefined
+    try {
+        value = parseInt(initialNumberValue);
+    } catch (e) {
+    }
+    const [searchTerm, setSearchTerm] = useState(value);
     useEffect(() => { onChange(searchTerm) }, [searchTerm])
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -14,7 +20,7 @@ const SearchComp = ({ onSearch = (text) => { }, placeholder = "Buscar...", input
     }
 
     return (
-        <form className='w-full' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div className="flex flex-row relative justify-center items-center w-fit h-fit bg-white rounded-lg">
                 <button type='submit' className="relative left-2 p-1">
                     <svg
@@ -34,7 +40,7 @@ const SearchComp = ({ onSearch = (text) => { }, placeholder = "Buscar...", input
                         ></path>
                     </svg>
                 </button>
-                <input ref={inputRef} required={{}} id='search' type='text' value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }}
+                <input ref={inputRef} required={{}} id='search' type='number' value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }}
                     className="bg-white outline-none border border-transparent text-neutral-900 placeholder-neutral-400 text-sm rounded-lg focus:ring-white  focus:border-transparent block w-64 p-2.5 checked:bg-emerald-500"
                     placeholder={placeholder} />
                 <button type='button' className="relative mr-2" onClick={clearText}>
