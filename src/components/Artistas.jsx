@@ -1,17 +1,18 @@
 import SearchTextField from './SearchTextfield'
 import Boton from '../login/Botton';
 import Card from '../cards/ArtistSearchCard';
+import axios from 'axios';
 import { useState } from 'react';
 import { useRef } from 'react';
 const artistas = () => {
     const ref = useRef();
     const [searching, setSearching] = useState(false);
-    const [artists, setArtists] = useState([]);
+    const [artist, setArtist] = useState();
     return (
-        <div className='w-full h-full p-4 flex items-center flex-col'>
+        <div className='w-full h-full p-4 flex items-center flex-col gap-2'>
             {
                 searching &&
-                (busqueda(setSearching, setArtists, artists, ref))
+                (busqueda(setSearching, setArtist, artist, ref))
             }
             {
                 !searching &&
@@ -24,9 +25,7 @@ const artistas = () => {
             }
             <div className='flex flex-col items-center pb-10 h-full w-full gap-2'>
                 {
-                    artists.map(each =>
-                        (<div key={each.id}>{each.text}</div>)
-                    )
+                    artist && (<Card artist={artist} key={artist.name} />)
                 }
             </div>
         </div>
@@ -34,11 +33,20 @@ const artistas = () => {
 }
 
 const busqueda = (setSearching, setArtists, artists, ref) => {
-    const search = (text) => {
-        console.log({ text });
-        artists.push({ text: text, id: (Math.random() + '') });
-        setArtists(artists);
-
+    const search = (name) => {
+        axios.get(`http://localhost:8080/artists/find?name=${name}`)
+            .then(response => {
+                if (response.status === 200) {
+                    setArtists(response.data);
+                } else {
+                    console.log('Unexpected status code:', response.status);
+                }
+            })
+            .catch(error => {
+                if (error.response.status == 400) {
+                    alert(error.response.data)
+                }
+            });
     }
     return (
         <div className='flex flex-row gap-2 items-center'>

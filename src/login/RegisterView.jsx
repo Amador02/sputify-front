@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { LogoFull } from '../components/LogoSputify';
 import Botton from './Botton'
-import { NavLink } from 'react-router-dom';
+import axios from 'axios'
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const mainMenu = ({ setLoggedIn }) => {
+    const nav = useNavigate()
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,7 +24,25 @@ const mainMenu = ({ setLoggedIn }) => {
                     </div>
                     <div className='items-center justify-center flex'>
                         <Botton onClick={() => {
-                            alert(`Usuario: ${username} email: ${email}, password: ${password}`);
+                            const data = {
+                                "username": username,
+                                "email": email,
+                                "password": password,
+                                "lstSongs": [],
+                                "type": 'USER'
+                            };
+                            axios.post('http://localhost:8080/user', data)
+                                .then(response => {
+                                    if (response.status === 200) {
+                                        alert('Registro realizado con éxito')
+                                        nav('/login')
+                                    } else {
+                                        alert('Error al registrar')
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error during registration:', error);
+                                });
                         }} text='Regístrate' key='iniciar-sesion' svg={
                             <svg className='mr-2' width='24px' viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_iconCarrier">

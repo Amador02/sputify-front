@@ -53,7 +53,7 @@ const songSlider = ({ setPlayerState, playerState, setActiveSong, activeSong, ca
             <Slider {...settings}>
                 {canciones.map((cancion) => {
                     return (
-                        <MusicCard setPlayerState={setPlayerState} playerState={playerState} key={cancion.songid} cancion={cancion} setActiveSong={setActiveSong} activeSong={activeSong} />
+                        <MusicCard setPlayerState={setPlayerState} playerState={playerState} key={cancion.url} cancion={cancion} setActiveSong={setActiveSong} activeSong={activeSong} />
                     )
                 })
                 }

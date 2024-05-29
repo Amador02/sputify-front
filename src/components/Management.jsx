@@ -1,12 +1,25 @@
 import { useState } from "react";
+import { v4 } from "uuid";
 import Botton from '../login/Botton';
+import axios from "axios";
 
-const management = () => {
+const management = ({ setModal, setModalContent }) => {
     const [barOpened, setBarOpened] = useState(true);
-    const [type, setType] = useState('');
+    const [type, setType] = useState('addSong');
+
     const [name, setName] = useState('');
     const [loadInfo, setLoadInfo] = useState('');
     const [nacionality, setNacionality] = useState('');
+    const [isGroup, setIsGroup] = useState(false);
+
+    const [songName, setSongName] = useState('');
+    const [album, setAlbum] = useState('');
+    const [caratula, setCaratula] = useState('');
+    const [anio, setAnio] = useState('');
+    const [duracion, setDuracion] = useState('');
+    const [genero, setGenero] = useState('');
+    const [nombreArtistaSong, setNombreArtistaSong] = useState('');
+    const [url, setURL] = useState('');
     return (
         <div className="w-full h-full flex items-center justify-center">
             <div className="py-4 h-full">
@@ -14,7 +27,7 @@ const management = () => {
                     <label className="text-xl font-bold">Gestión de Info.</label>
                     <Botton onClick={() => {
                         setType('load')
-                    }} style="wow-white" text='Cargar Información' key='iniciar-sesion' svg={
+                    }} style="wow-white" text='Cargar Información' key='go-load' svg={
                         <div className="p-1">
                             <svg width='24px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_iconCarrier">
@@ -37,7 +50,24 @@ const management = () => {
                     } />
                     <Botton onClick={() => {
                         setType('addartist');
-                    }} style="wow-white" text='Agregar Artista' key='iniciar-sesion' svg={
+                    }} style="wow-white" text='Agregar Artista' key='add-artist' svg={
+                        <div className="p-1">
+                            <svg width='24px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M4 12H20M12 4V20"
+                                        stroke="#000"
+                                        strokeWidth={2}
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </g>
+                            </svg>
+                        </div>
+                    } />
+                    <Botton onClick={() => {
+                        setType('addSong');
+                    }} style="wow-white" text='Agregar Canción' key='add-song' svg={
                         <div className="p-1">
                             <svg width='24px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_iconCarrier">
@@ -82,6 +112,7 @@ const management = () => {
                                             id="tick"
                                             name="tick"
                                             type="checkbox"
+                                            onChange={(e) => setIsGroup(e.target.checked)}
                                         />
                                         <span className="absolute left-0 top-1/2 h-[2em] w-[2em] -translate-x-full -translate-y-1/2 rounded-[0.25em] border-[2px] border-black"></span>
                                         <svg
@@ -105,8 +136,88 @@ const management = () => {
                                 </div>
                                 <div className='items-center justify-center flex'>
                                     <Botton onClick={() => {
-                                        alert("Agregado")
-                                    }} text='Agregar' key='iniciar-sesion' svg={
+                                        const uuid = v4()
+                                        const data = {
+                                            "code": uuid,
+                                            "name": name,
+                                            "nationality": nacionality,
+                                            "isBand": isGroup,
+                                            "lstSongs": []
+                                        }
+                                        axios.post("http://localhost:8080/artists", data).then((response) => {
+                                            if (response.status === 200) {
+                                                setModalContent(<label className="text-black">Artista agregado con éxito</label>)
+                                            } else if (response.status === 400) {
+                                                setModalContent(<label className="text-black">{response.data}</label>)
+                                            }
+                                            setModal(true);
+
+                                        }).catch((error) => {
+                                            setModalContent(<label className="text-black">{error.response.data}</label>)
+                                            setModal(true);
+                                        })
+
+                                    }} text='Agregar' key='add-artist-2' svg={
+                                        <div className="p-1">
+                                            <svg width='24px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path
+                                                        d="M4 12H20M12 4V20"
+                                                        stroke="#fff"
+                                                        strokeWidth={2}
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </g>
+                                            </svg>
+                                        </div>
+                                    } />
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    type === 'addSong' && (
+                        <div className="flex w-full h-full items-center justify-center">
+                            <div className="flex w-96 flex-col rounded-xl bg-[#fff] bg-clip-border text-gray-700 shadow-md p-2">
+                                <div className="flex flex-col gap-4 p-6 items-center">
+                                    <label className="font-semibold text-black text-xl">Creación de Canciones</label>
+                                    {tf(setSongName, 'text', 'Nombre', songName)}
+                                    {tf(setAlbum, 'text', 'Album', album)}
+                                    {tf(setCaratula, 'text', 'Carátula', caratula)}
+                                    {tf(setAnio, 'text', 'Año', anio)}
+                                    {tf(setDuracion, 'text', 'Duración', duracion)}
+                                    {tf(setGenero, 'text', 'Genero', genero)}
+                                    {tf(setURL, 'text', 'URL', url)}
+                                    {tf(setNombreArtistaSong, 'text', 'Nombre De Artista', nombreArtistaSong)}
+                                </div>
+                                <div className='items-center justify-center flex'>
+                                    <Botton onClick={() => {
+                                        const data = {
+                                            "name": songName,
+                                            "albumName": album,
+                                            "cover": caratula,
+                                            "year": anio,
+                                            "duration": duracion,
+                                            "url": url,
+                                            "genre": genero,
+                                            "artistName": nombreArtistaSong
+                                        }
+
+                                        axios.post("http://localhost:8080/songs/user", data).then((response) => {
+                                            if (response.status === 200) {
+                                                setModalContent(<label className="text-black">Canció agregada con éxito</label>)
+                                            } else if (response.status === 400) {
+                                                setModalContent(<label className="text-black">{response.data}</label>)
+                                            }
+                                            setModal(true);
+
+                                        }).catch((error) => {
+                                            setModalContent(<label className="text-black">{error.response.data}</label>)
+                                            setModal(true);
+                                        })
+                                    }} text='Agregar' key='add-song' svg={
                                         <div className="p-1">
                                             <svg width='24px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="SVGRepo_iconCarrier">
@@ -138,7 +249,7 @@ const management = () => {
                                 <div className='items-center justify-center flex'>
                                     <Botton onClick={() => {
                                         alert(loadInfo)
-                                    }} text='Cargar' key='iniciar-sesion' svg={
+                                    }} text='Cargar' key='load-info-2' svg={
                                         <div className="p-1">
                                             <svg width='24px' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="SVGRepo_iconCarrier">

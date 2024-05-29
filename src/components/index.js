@@ -16,7 +16,8 @@ import Artistas from './Artistas';
 import Canciones from './Canciones';
 import Consulta from './Consulta';
 import Management from './Management';
+import Uploader from './Uploader'
 
 export {
-    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, Search, Header, RouterComponent, LoginViewRouting, MusicCard, SongSlider, BusquedaOr, Loader, RouterAdmin, Artistas, Canciones, Consulta, Management
+    ArtistDetail, Home, SongDetail, MusicBar, LogoFull, Search, Header, RouterComponent, LoginViewRouting, MusicCard, SongSlider, BusquedaOr, Loader, RouterAdmin, Artistas, Canciones, Consulta, Management, Uploader
 }

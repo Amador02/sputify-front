@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { LogoFull } from '../components/LogoSputify';
 import Botton from './Botton'
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 
-const mainMenu = ({ setUserInfo }) => {
+const mainMenu = ({ setLoggedIn }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     return (
@@ -20,11 +21,20 @@ const mainMenu = ({ setUserInfo }) => {
                     </div>
                     <div className='items-center justify-center flex'>
                         <Botton onClick={() => {
-                            alert(`Usuario: ${username}, password: ${password}`);
-                            setUserInfo({
-                                username: username,
-                                password: password,
-                            })
+                            if (username === 'admin' && password === '$aDmiN') {
+                                setLoggedIn("admin")
+                                return;
+                            }
+                            axios.get('http://localhost:8080/user/login', { params: { username: username, password: password } })
+                                .then(response => {
+                                    if (response.status == 200)
+                                        setLoggedIn(username)
+                                    else
+                                        alert("Verifica tus credenciales de acceso")
+                                })
+                                .catch(error => {
+                                    alert("Verifica tus credenciales de acceso")
+                                });
                         }} text='Iniciar Sesión' key='iniciar-sesion' svg={
                             <svg className='mr-2' width='24px' viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_iconCarrier">

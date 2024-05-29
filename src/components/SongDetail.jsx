@@ -2,15 +2,29 @@ import { useParams } from 'react-router-dom';
 import transicion from './transicion';
 import { getColor } from 'color-thief-react'
 import { useState } from 'react';
+import axios from 'axios';
 
-function SongDetail({ canciones, activeSong, playerState, setPlayerState, setActiveSong }) {
+function SongDetail({ activeSong, playerState, setPlayerState, setActiveSong }) {
     const { songid } = useParams();
-    const c = canciones.find(ca => ca.songid === songid);
+    const [c, setC] = useState();
     const [color, setColor] = useState("#122133")
-    if (c && c.src)
-        getColor(c.src, "hex").then(cc => {
-            setColor(cc)
-        }).catch((e) => { console.error(e); });
+    axios.get(`http://localhost:8080/songs/find?name=${decodeURIComponent(songid)}`)
+        .then(response => {
+            if (response.status === 200) {
+                setC(response.data);
+            } else {
+                console.log('Unexpected status code:', response.status);
+            }
+            if (c && c.cover)
+                getColor(c.cover, "hex").then(cc => {
+                    setColor(cc)
+                }).catch((e) => { console.error(e); });
+        })
+        .catch(error => {
+            if (error.response.status == 400) {
+                alert(error.response.data)
+            }
+        });
     return (
         <div>
             {
