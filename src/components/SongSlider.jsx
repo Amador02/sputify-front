@@ -18,7 +18,6 @@ const songSlider = ({ setPlayerState, playerState, setActiveSong, activeSong, ca
       dots: true,
         infinite: true,
         slidesToShow: 5,
-        slidesToScroll: 1,
         initialSlide: 0,
         slidesToScroll: 1,
         responsive: [

@@ -8,7 +8,7 @@ const musicCard = ({ playerState, key, cancion, setActiveSong, activeSong, setPl
     return (
         <div key={key} className='max-h-fit min-h-[280px] h-fit w-fit min-w-[224px] max-w-[224px] flex flex-col overflow-clip '>
             <div className="overflow-hidden min-w-56 min-h-56 max-h-56 max-w-56 z-10 relative flex justify-center items-center">
-                <motion.img className="blur absolute top-0 left-0 h-56" src={cancion.cover} alt={`song: ${cancion.songid} - ${cancion.authorid}`} />
+                <motion.img className="blur absolute top-0 left-0 h-56" src={cancion.src} alt={`song: ${cancion.songid} - ${cancion.authorid}`} />
                 <div className='absolute w-full h-full top-0 left-0 bg-black bg-opacity-70 flex justify-center items-center'>
                     <motion.img
                         transition={transition}
