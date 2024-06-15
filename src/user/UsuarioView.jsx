@@ -10,11 +10,9 @@ const usuario = ({ setLoggedIn }) => {
     });
     const [activeSong, setActiveSong] = useState(
         {
-            song: "Happier",
-            songid: "happier-000",
-            author: "Marshmello",
-            authorid: "marshmello-000",
-            src: "/src/assets/imgs/album.jpeg",
+            name: "Happier",
+            artistName: "Marshmello",
+            cover: "/src/assets/imgs/album.jpeg",
             url: "https://www.youtube.com/watch?v=m7Bc3pLyij0"
         },
     );

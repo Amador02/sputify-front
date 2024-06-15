@@ -8,7 +8,7 @@ const musicCard = ({ playerState, key, cancion, setActiveSong, activeSong, setPl
     return (
         <div key={key} className='max-h-fit min-h-[280px] h-fit w-fit min-w-[224px] max-w-[224px] flex flex-col overflow-clip '>
             <div className="overflow-hidden min-w-56 min-h-56 max-h-56 max-w-56 z-10 relative flex justify-center items-center">
-                <motion.img className="blur absolute top-0 left-0 h-56" src={cancion.src} alt={`song: ${cancion.songid} - ${cancion.authorid}`} />
+                <motion.img className="blur absolute top-0 left-0 h-56" src={cancion.cover} alt={`song: ${cancion.songid} - ${cancion.authorid}`} />
                 <div className='absolute w-full h-full top-0 left-0 bg-black bg-opacity-70 flex justify-center items-center'>
                     <motion.img
                         transition={transition}
@@ -36,7 +36,7 @@ const musicCard = ({ playerState, key, cancion, setActiveSong, activeSong, setPl
                             transition: { delay: 0.5, ...transition },
                         }}
                         className="shadow-lg cursor-pointer relative w-28  rounded-full "
-                        src={cancion.src}
+                        src={cancion.cover}
                         alt={`innersong: ${cancion.name} - ${cancion.artistName}`} />
 
                 </div>
@@ -62,10 +62,10 @@ const musicCard = ({ playerState, key, cancion, setActiveSong, activeSong, setPl
 
             </div>
             <NavLink to={`/songs/${encodeURIComponent(cancion.name)}`}>
-                <label className='max-w-min whitespace-nowrap text-nowrap cursor-pointer font-semibold hover:font-black hover:underline'>{cancion.song}</label>
+                <label className='max-w-min whitespace-nowrap text-nowrap cursor-pointer font-semibold hover:font-black hover:underline'>{cancion.name}</label>
             </NavLink>
             <NavLink to={`/artists/${cancion.authorid}`}>
-                <label className='max-w-min whitespace-nowrap text-nowrap cursor-pointer font-normal hover:font-semibold hover:underline'>{cancion.author}</label>
+                <label className='max-w-min whitespace-nowrap text-nowrap cursor-pointer font-normal hover:font-semibold hover:underline'>{cancion.artistName}</label>
             </NavLink>
         </div>
 

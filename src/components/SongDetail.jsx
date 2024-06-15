@@ -1,30 +1,33 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import transicion from './transicion';
 import { getColor } from 'color-thief-react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function SongDetail({ activeSong, playerState, setPlayerState, setActiveSong }) {
     const { songid } = useParams();
+    const location = useLocation();
     const [c, setC] = useState();
     const [color, setColor] = useState("#122133")
-    axios.get(`http://localhost:8080/songs/find?name=${decodeURIComponent(songid)}`)
-        .then(response => {
-            if (response.status === 200) {
-                setC(response.data);
-            } else {
-                console.log('Unexpected status code:', response.status);
-            }
-            if (c && c.cover)
-                getColor(c.cover, "hex").then(cc => {
-                    setColor(cc)
-                }).catch((e) => { console.error(e); });
-        })
-        .catch(error => {
-            if (error.response.status == 400) {
-                alert(error.response.data)
-            }
-        });
+    const value = decodeURIComponent(songid)
+    useEffect(() => {
+        axios.get(`http://localhost:8080/songs/find?name=${value}`)
+            .then(response => {
+                if (response.status === 200) {
+                    setC(response.data);
+                    console.log(response.data)
+                    if (response.data.cover)
+                        getColor(response.data.cover, "hex").then(cc => {
+                            setColor(cc)
+                        }).catch(() => { });
+                } else {
+                    console.log('Unexpected status code:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [location])
     return (
         <div>
             {
@@ -39,22 +42,23 @@ function SongDetail({ activeSong, playerState, setPlayerState, setActiveSong }) 
                             <div className='w-screen pb-1 overflow-hidden'>
                                 <div style={{ background: `linear-gradient(${color}, transparent)` }} className='relative flex items-center justify-top p-3 flex-col'>
                                     <div className='relative'>
-                                        <img className="w-40 h-40 transition-all ease-in-out bg-black hover:scale-[1.05] active:scale-[0.95] rounded-xl shadow-md cursor-pointer "
+                                        {c.cover &&
+                                            (<img className="w-40 h-40 transition-all ease-in-out bg-black hover:scale-[1.05] active:scale-[0.95] rounded-xl shadow-md cursor-pointer "
 
-                                            src={c.src} alt="" onClick={() => {
-                                                if (activeSong.songid !== c.songid) {
-                                                    setActiveSong(c)
-                                                    setPlayerState(prevState => ({
-                                                        ...prevState,
-                                                        playing: true
-                                                    }))
-                                                } else {
-                                                    setPlayerState(prevState => ({
-                                                        ...prevState,
-                                                        playing: !prevState.playing
-                                                    }))
-                                                }
-                                            }} />
+                                                src={c.cover} alt="" onClick={() => {
+                                                    if (activeSong.name !== c.name) {
+                                                        setActiveSong(c)
+                                                        setPlayerState(prevState => ({
+                                                            ...prevState,
+                                                            playing: true
+                                                        }))
+                                                    } else {
+                                                        setPlayerState(prevState => ({
+                                                            ...prevState,
+                                                            playing: !prevState.playing
+                                                        }))
+                                                    }
+                                                }} />)}
                                         <div className='absolute overflow-hidden top-0 left-0 w-full h-full pointer-events-none flex items-center justify-center'>
                                             <svg
                                                 className='w-8 z-10  fill-white pointer-events-none shadow-2xl'
@@ -82,8 +86,13 @@ function SongDetail({ activeSong, playerState, setPlayerState, setActiveSong }) 
                                     </div>
                                 </div>
                             </div>
-                            <label className='pt-2 font-semibold'>{c.song}</label>
-                            <label>{c.author}</label>
+                            <label className='pt-2 font-semibold'>{c.name}</label>
+                            <label>{c.artistName}</label>
+                            <label>{c.year}</label>
+                            <label>{c.cover}</label>
+                            <label>{c.genre}</label>
+                            <label>{`Album: ${c.albumName}`}</label>
+                            <label onClick={() => { window.open((c.url)) }} className='cursor-pointer hover:text-blue-400 transition-colors'>{c.url}</label>
 
                         </div>
                     </div>

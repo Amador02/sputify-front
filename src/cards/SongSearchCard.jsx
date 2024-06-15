@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const transition = { duration: 0.25, ease: [0.43, 0.13, 0.23, 0.96] };
 
-const card = ({ cancion }) => {
+const card = ({ cancion, setPlayerState, setActiveSong, playerState }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -14,7 +14,15 @@ const card = ({ cancion }) => {
                 transition: { delay: 0.4, ...transition },
             }}
             className="w-full h-24 bg-[#0d1825] rounded-full flex items-center px-4 gap-4">
-            <div className="w-20 h-20 group rounded-full flex items-center cursor-pointer " onClick={() => { }}>
+            <div className="w-20 h-20 group rounded-full flex items-center cursor-pointer " onClick={() => {
+                setActiveSong(cancion);
+                setPlayerState(()=>{
+                    return {
+                       ...playerState,
+                       playing: true,
+                    }
+                });
+            }}>
                 <img className="w-16 h-16 group-hover:scale-110 rounded-full transition-all pointer-events-none select-none" src={cancion.cover} alt="" />
             </div>
             <div className="flex flex-col justify-center items-center">
@@ -26,8 +34,8 @@ const card = ({ cancion }) => {
                 </NavLink>
             </div>
             <div>|</div>
-            <div>{cancion.albumName}</div>
-        </motion.div>
+            <div>{`Album: ${cancion.albumName}`}</div>
+        </motion.div >
     );
 }
 export default card;

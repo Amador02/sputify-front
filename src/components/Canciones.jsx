@@ -1,31 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
 import SongSearchCard from '../cards/SongSearchCard'
+import Boton from "../login/Botton"
 
-const canciones = () => {
+const canciones = ({ setActiveSong, setPlayerState, playerState }) => {
     const [optionSelected, setOptionSelected] = useState(false);
-    const [songs, setSongs] = useState([
-        {
-            song: "Happier",
-            songid: "happier-000",
-            author: "Marshmello",
-            authorid: "marshmello-000",
-            src: "/src/assets/imgs/album.jpeg",
-            url: "https://www.youtube.com/watch?v=m7Bc3pLyij0",
-            album: 'Single',
-            duration: '3:54'
-        },
-        {
-            song: "Happier",
-            songid: "happier-0001",
-            author: "Marshmello",
-            authorid: "marshmello-000",
-            src: "/src/assets/imgs/album.jpeg",
-            url: "https://www.youtube.com/watch?v=m7Bc3pLyij0",
-            album: 'Single',
-            duration: '3:54'
-        },
-    ]);
+    const [songs, setSongs] = useState([]);
     return (
         <div className='w-full h-full'>
             {
@@ -67,10 +47,16 @@ const canciones = () => {
             }
             {
                 optionSelected && (
-                    <div className='h-full flex flex-col p-4 gap-4'>
+                    <div className='h-full flex items-center flex-col p-4 gap-4'>
+                            <Boton
+                                onClick={() => setOptionSelected(false)}
+                                style='normal'
+                                text='Volver'
+                                svg={<></>}>
+                            </Boton>
                         {
                             songs.map(song => {
-                                return (<SongSearchCard cancion={song} />)
+                                return (<SongSearchCard cancion={song} setActiveSong={setActiveSong} setPlayerState={setPlayerState} playerState={playerState} />)
                             })
                         }
                     </div>

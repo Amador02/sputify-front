@@ -15,7 +15,7 @@ export default function router({ setPlayerState, playerState, setActiveSong, act
                     <Route path="/error" element={<button>Error</button>} />
                     <Route path="/home" element={<Home setPlayerState={setPlayerState} playerState={playerState} setActiveSong={setActiveSong} activeSong={activeSong} />} />
                     <Route path="/search" element={<Search setActiveSong={setActiveSong} />} />
-                    <Route path="/songs" element={<Canciones />} />
+                    <Route path="/songs" element={<Canciones setActiveSong={setActiveSong} setPlayerState={setPlayerState} playerState={playerState}/>} />
                     <Route path="/artists" element={<Artistas />} />
                     <Route path="/artists/:id" element={<ArtistDetail />} />
                     <Route path="/songs/:songid" element={<SongDetail activeSong={activeSong} playerState={playerState} setActiveSong={setActiveSong} setPlayerState={setPlayerState} />} />

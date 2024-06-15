@@ -94,7 +94,7 @@ export default function musicBar({ activeSong, setActiveSong, setPlayerState, pl
             />
             <div className="z-10 flex flex-row justify-center items-center h-20 bottom-0 left-0 right-0 bg-[#080e16]">
                 <div className='group ml-2 justify-start'>
-                    <NavLink className='flex pr-6 flex-row w-72 h-max justify-start items-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to={`/songs/${encodeURIComponent(activeSong.name)}}`}>
+                    <NavLink className='flex pr-6 flex-row w-72 h-max justify-start items-center gap-5 group-hover:bg-[#122033] rounded-lg transition-all duration-100' to={`/songs/${encodeURIComponent(activeSong.name)}`}>
                         <img className='min-h-16 min-w-16 max-h-16 max-w-16 m-0 border-4 border-[#080e16] group-hover:border-[#122033] relative mx-auto rounded-xl overflow-hidden transition-all duration-100' src={activeSong.cover} alt="album" />
                         <div className="grow items-center text-left">
                             <h1 className="text-xl text-white font-semibold">{activeSong.name}</h1>
